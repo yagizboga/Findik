@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Fındık.sln"
+    "dotnet.defaultSolution": "Findik.sln"
 }
