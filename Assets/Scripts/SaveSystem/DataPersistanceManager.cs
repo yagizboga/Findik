@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System;
 using NUnit.Framework.Constraints;
+using UnityEngine.SceneManagement;
 
 public class DataPersistanceManager : MonoBehaviour
 {
@@ -17,27 +18,35 @@ public class DataPersistanceManager : MonoBehaviour
     private void Awake()
     {
         if(instance != null){
-            Debug.LogError("There can't be more than one data persistance manager instance in the scene!");
-        }   
+            Debug.Log("There can't be more than one data persistance manager instance in the scene! Destroying the new one.");
+            Destroy(this.gameObject);
+            return;
+        }  
         instance = this;
+        DontDestroyOnLoad(this.gameObject);
+        dataHandler = new FileDataHandler(Application.persistentDataPath,fileName);
     }
 
-    private void Start()
+    void OnEnable()
     {
-        dataHandler = new FileDataHandler(Application.persistentDataPath,fileName);
-        dataPersistanceObjects = FindAllDataPersistanceObjects();
-        LoadGame();   
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     public void NewGame(){
         gameData = new GameData();
+        SaveGame();
     }
 
     public void LoadGame(){
         gameData = dataHandler.Load();
         if(gameData == null){
-            Debug.LogError("No game was found to load!");
-            NewGame();
+            Debug.Log("No game was found to load!");
+            return;
         }
 
         foreach(IDataPersistance dataPersistance in dataPersistanceObjects){
@@ -48,12 +57,25 @@ public class DataPersistanceManager : MonoBehaviour
     }
 
     public void SaveGame(){
+        if(gameData == null){
+            Debug.Log("No game data to save!");
+            return;
+        }
         foreach(IDataPersistance dataPersistance in dataPersistanceObjects){
             dataPersistance.SaveData(ref gameData);
         }
 
         Debug.Log("saved test num with " + gameData.testNum);
         dataHandler.Save(gameData);
+    }
+
+    public void OnSceneLoaded(Scene scene, LoadSceneMode mode){
+        dataPersistanceObjects = FindAllDataPersistanceObjects();
+        LoadGame();
+    }
+
+    public void OnSceneUnloaded(Scene scene){
+        SaveGame();
     }
 
     private void OnApplicationQuit()
@@ -66,5 +88,9 @@ public class DataPersistanceManager : MonoBehaviour
         .OfType<IDataPersistance>();
 
         return new List<IDataPersistance>(dataPersistanceObjects);
+    }
+
+    public bool HasGameData(){
+        return gameData != null;
     }
 }
