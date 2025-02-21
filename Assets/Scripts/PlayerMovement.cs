@@ -26,7 +26,6 @@ public class PlayerMovement : MonoBehaviour
         if(ctx.performed){
             isMoving = true;
             movement = ctx.ReadValue<Vector2>();
-            Debug.Log(movement);
         }
         else if(ctx.canceled){
             isMoving = false;

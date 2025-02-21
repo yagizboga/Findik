@@ -7,18 +7,20 @@ public class Grid
     int cellSize;
     float startPosX;
     float startPosY;
+    int [] fullness;
+    Vector3 [] wholeArray;
 
 
-    public Grid(int width,int height,float startPosX,float startPosY,int cellSize){
+    public Grid(int width,int height,float startPosX,float startPosY,int cellSize, int [] fullness){
         this.width = width;
         this.height = height;
         this.startPosX = startPosX;
         this.startPosY = startPosY;
         this.cellSize = cellSize;
+        this.fullness = fullness;
     
         for(int x = 0;x<width;x++){
             for(int y=0;y<height;y++){
-                Debug.Log(x + " "+ y);
                 Debug.DrawRay(new Vector3(startPosX + x * cellSize,startPosY + y * cellSize),new Vector3(cellSize,0,0),Color.white,1000f);
                 Debug.DrawRay(new Vector3(startPosX + x * cellSize,startPosY + y * cellSize),new Vector3(0,cellSize,0),Color.white,1000f);
             }
@@ -41,6 +43,16 @@ public class Grid
         }
         else{
              return new Vector2Int(-1, -1);
+        }
+    }
+
+    public void SendRays(){
+        for(int i=0;i<fullness.Length;i++){
+
+            //Ray ray = Camera.main.ScreenPointToRay();
+            if(fullness[i] == 1){
+                
+            }
         }
     }
 
