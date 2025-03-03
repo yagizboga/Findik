@@ -2,16 +2,18 @@ using UnityEngine;
 
 public class shelf : MonoBehaviour, IInteractable
 {
-    [SerializeField] Canvas shelfUI;
+    [SerializeField] GameObject shelfObject;
+    [SerializeField] Transform shelfTransform;
+    [SerializeField] Transform gameTransform;
     bool isActive = false;
 
     public void Interact(){
         if(isActive){
-            shelfUI.gameObject.SetActive(false);
+            shelfObject.transform.position = shelfTransform.position;
             isActive = false;
         }
         else if(!isActive){
-            shelfUI.gameObject.SetActive(true);
+            shelfObject.transform.position = gameTransform.position;
             isActive = true;
         }
     }

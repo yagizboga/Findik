@@ -13,7 +13,7 @@ public class TimeManager : MonoBehaviour
 
     void Update(){
         GAMETIME+= Time.deltaTime;
-        Debug.Log(GAMETIME);
+//        Debug.Log(GAMETIME);
         if(GAMETIME >= 4 && !isSpawned){
             tradeManager.SpawnTrade();
             isSpawned = true;

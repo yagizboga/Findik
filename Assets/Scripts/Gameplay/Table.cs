@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Table : MonoBehaviour, IInteractable
 {
-    [SerializeField] Canvas tableCanvas;
+    [SerializeField] GameObject tableCanvas;
     bool isActive;
     public void Interact(){
         if(isActive){

@@ -1,0 +1,91 @@
+using UnityEngine.UI;
+using UnityEngine;
+using System.Collections.Specialized;
+using TMPro;
+
+class Grid{
+    int width,height;
+    float cellSize;
+    int [,] shelfGrid;
+    Vector3 startPos;
+    Vector2 [,] cellPositions;
+    Vector2 [,] cellMiddlePositions;
+    int [,] values;
+    GameObject textParentCanvas;
+    GameObject [,]valueText;
+
+    public Grid(int width, int height, int cellSize, Vector3 startPos, GameObject textParentCanvas){
+        this.width = width;
+        this.height = height;
+        this.cellSize = cellSize;
+        this.startPos = startPos;
+        shelfGrid = new int[width,height];
+        cellPositions = new Vector2 [width,height]; 
+        cellMiddlePositions = new Vector2[width,height];
+        values = new int[width,height];
+        this.textParentCanvas = textParentCanvas;
+        valueText = new GameObject[width,height];
+
+        for(int x = 0;x < width;x++){
+            for(int y = 0;y<height;y++){
+                values[x,y] = 0;
+                cellPositions[x,y] = new Vector2(startPos.x + x * cellSize, startPos.y + y * cellSize);
+                cellMiddlePositions[x,y] = new Vector2(startPos.x + x * cellSize + cellSize / 2f, startPos.y + y * cellSize + cellSize / 2f);
+                Debug.DrawLine(new Vector3(startPos.x + x* cellSize, startPos.y + y* cellSize)
+                                            ,new Vector3(startPos.x + (x+1) * cellSize,startPos.y + y * cellSize,0),Color.white,1000f);
+
+               Debug.DrawLine(new Vector3(startPos.x + x* cellSize, startPos.y + y* cellSize)
+                                            ,new Vector3(startPos.x +x * cellSize,startPos.y + (y+1) * cellSize,0),Color.white,1000f);
+                //Debug.Log(cellMiddlePositions[x,y]);
+                Debug.DrawLine(new Vector3(cellMiddlePositions[x,y].x - cellSize/20f,cellMiddlePositions[x,y].y,0)
+                                            ,new Vector3(cellMiddlePositions[x,y].x + cellSize/20f,cellMiddlePositions[x,y].y,0)
+                                            ,Color.red,1000f);
+                valueText[x,y] = new GameObject();
+                Debug.Log(valueText[x,y] + " " + valueText[x,y].transform.position);
+                valueText[x,y].AddComponent<TextMeshPro>();
+                valueText[x,y].GetComponent<RectTransform>().anchoredPosition = cellMiddlePositions[x,y];
+                valueText[x,y].gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(cellSize,cellSize);
+                valueText[x,y].GetComponent<TextMeshPro>().verticalAlignment = VerticalAlignmentOptions.Middle;
+                valueText[x,y].GetComponent<TextMeshPro>().horizontalAlignment = HorizontalAlignmentOptions.Center;
+                valueText[x,y].GetComponent<TextMeshPro>().text = values[x,y].ToString();
+                valueText[x,y].GetComponent<TextMeshPro>().fontSize = cellSize*4;
+                valueText[x,y].GetComponent<TextMeshPro>().sortingOrder = 7;
+                valueText[x,y].transform.SetParent(textParentCanvas.transform);
+            }
+
+
+        }
+    }
+
+    public Vector2 GetWorldToGridPosition(Vector3 worldPos){
+        return new Vector2((int)((worldPos.x - startPos.x) / cellSize), (int)((worldPos.y - startPos.y)/cellSize));
+    }
+
+    public void SetCellValue(int x , int y, int value){
+        if(x < width && y < height && x >= 0 && y >= 0){
+            values[x,y] = value;
+             valueText[x,y].GetComponent<TextMeshPro>().text = values[x,y].ToString();
+        }
+    }
+    public int GetCellValue(int x, int y){
+        return values[x,y];
+    }
+
+    public int IsCellEmpty(int x,int y){
+        if(x < width && y < height && x >= 0 && y >= 0){
+            if(values[x,y] == 0){
+                return 1;
+            }
+            else{return 0;}
+        }
+        else{
+            return -1;
+        }
+    }
+
+    public Vector2 GetCellMiddlePositions(int x,int y){
+        return cellMiddlePositions[x,y];
+    }
+
+
+}
