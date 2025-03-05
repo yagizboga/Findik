@@ -17,18 +17,19 @@ public class ShelfUI : MonoBehaviour
 
     }
     void Update(){
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        shelfGrid.SetCellValue((int)shelfGrid.GetWorldToGridPosition(mousePos).x , (int)shelfGrid.GetWorldToGridPosition(mousePos).y , 1);
-        Vector2 lastCell = shelfGrid.GetWorldToGridPosition(mousePos);
-        lastCells.Add(lastCell);
-        if(lastCells.Count > 0){
-            for(int i = 0;i<lastCells.Count;i++){
-                if(lastCells[i] != lastCell){
-                    shelfGrid.SetCellValue((int)lastCells[i].x,(int)lastCells[i].y,0);
-                }
-            }
+        //mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //shelfGrid.SetCellValue((int)shelfGrid.GetWorldToGridPosition(mousePos).x , (int)shelfGrid.GetWorldToGridPosition(mousePos).y , 1);
+        //Vector2 lastCell = shelfGrid.GetWorldToGridPosition(mousePos);
+        //lastCells.Add(lastCell);
+        //if(lastCells.Count > 0){
+        //    for(int i = 0;i<lastCells.Count;i++){
+        //        if(lastCells[i] != lastCell){
+        //            shelfGrid.SetCellValue((int)lastCells[i].x,(int)lastCells[i].y,0);
+        //        }
+        //    }
 
+        }   
+    public Grid GetShelfGrid(){
+            return shelfGrid;
         }
-        
-    }   
 }

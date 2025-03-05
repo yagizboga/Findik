@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections.Specialized;
 using TMPro;
 
-class Grid{
+public class Grid{
     int width,height;
     float cellSize;
     int [,] shelfGrid;
@@ -11,7 +11,7 @@ class Grid{
     Vector2 [,] cellPositions;
     Vector2 [,] cellMiddlePositions;
     int [,] values;
-    GameObject textParentCanvas;
+    public GameObject textParentCanvas;
     GameObject [,]valueText;
 
     public Grid(int width, int height, int cellSize, Vector3 startPos, GameObject textParentCanvas){
@@ -57,6 +57,19 @@ class Grid{
         }
     }
 
+    public void UpdateGridPosition(Vector3 newPos){
+        for(int x = 0;x < width;x++){
+            for(int y = 0;y<height;y++){
+                cellPositions[x,y] = new Vector2(newPos.x + x * cellSize, newPos.y + y * cellSize);
+                cellMiddlePositions[x,y] = new Vector2(newPos.x + x * cellSize + cellSize / 2f, newPos.y + y * cellSize + cellSize / 2f);
+            }
+
+
+        }
+    }
+    public Vector3 GetSize(){
+        return new Vector3(width,height,cellSize);
+    }
     public Vector2 GetWorldToGridPosition(Vector3 worldPos){
         return new Vector2((int)((worldPos.x - startPos.x) / cellSize), (int)((worldPos.y - startPos.y)/cellSize));
     }
@@ -85,6 +98,11 @@ class Grid{
 
     public Vector2 GetCellMiddlePositions(int x,int y){
         return cellMiddlePositions[x,y];
+    }
+
+
+    public void AlingToCenter(Vector3 alignTo){
+        textParentCanvas.transform.position = alignTo - new Vector3(width * cellSize / 2 , height * cellSize / 2);
     }
 
 

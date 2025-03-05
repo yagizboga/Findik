@@ -53,26 +53,6 @@ public class Shelf_UI_Item : MonoBehaviour,IDragHandler,IBeginDragHandler,IEndDr
     }
 
 
-    void OnCollisionEnter2D(Collision2D other){
-        if(other.gameObject.CompareTag("shelfBar")){
-            isCollidedWithBar = true;
-        }
-    }
-    void OnCollisionExit2D(Collision2D other){
-        if(other.gameObject.CompareTag("shelfBar")){
-            isCollidedWithBar = false;
-        }
-    }
-
-    void OnTriggerEnter2D(Collider2D other){
-        if(other.gameObject.CompareTag("shelfBar")){
-            isTriggeredWithBar = true;
-        }
-    }
-    void OnTriggerExit2D(Collider2D other){
-        if(other.gameObject.CompareTag("shelfBar")){
-            isTriggeredWithBar = false;
-        }
-    }
+    
 
 }
