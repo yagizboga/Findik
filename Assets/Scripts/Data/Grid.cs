@@ -105,5 +105,35 @@ public class Grid{
         textParentCanvas.transform.position = alignTo - new Vector3(width * cellSize / 2 , height * cellSize / 2);
     }
 
+    public GameObject GetValueText(int x,int y){
+        return valueText[x,y];
+    }
+
+    public void ClearGrid(){
+        for(int x = 0;x<width;x++){
+            for(int y=0;y<height;y++){
+                values[x,y] = 0;
+                valueText[x,y].GetComponent<TextMeshPro>().text = 0.ToString();
+            }
+        }
+    }
+
+    public void TransposeMatrix(){
+            int [,] tempValues = new int[height,width];
+            for(int x = 0;x< width;x++){
+                for(int y = 0;y<height;y++){
+                    values[x,y] = tempValues[y,x];
+                }
+            }
+            values = new int[height,width];
+            values = tempValues;
+            for(int x = 0;x< width;x++){
+                for(int y = 0;y<height;y++){
+                    cellMiddlePositions[x,y] = new Vector2(startPos.x + x * cellSize + cellSize / 2f, startPos.y + y * cellSize + cellSize / 2f);
+                    valueText[x,y].GetComponent<RectTransform>().anchoredPosition = cellMiddlePositions[x,y];
+                }
+            }
+    }
+
 
 }

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Key
   m_EditorClassIdentifier: 
   _name: 
-  _image: {fileID: 0}
+  _image: {fileID: -7375574283304055972, guid: 01097a05086b1cb458082f16e786637c, type: 3}
   type: 1

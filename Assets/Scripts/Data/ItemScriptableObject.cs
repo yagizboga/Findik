@@ -21,12 +21,17 @@ public class ItemScriptableObject : ScriptableObject
         else if(type == shelfItemType.key){
             values = new int [3,2] {{0,1},{0,1},{1,1}};
             size = new Vector2Int(3,2);
+            _image = Resources.Load("testItem.png") as Sprite;
+
         }
     }
 
     public enum shelfItemType{
         book,
         key
+    }
+    public Sprite GetSprite(){
+        return _image;
     }
 
     
