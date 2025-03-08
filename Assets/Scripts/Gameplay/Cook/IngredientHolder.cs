@@ -3,9 +3,9 @@ using UnityEngine;
 public class IngredientHolder : IngredientTypes
 {
     public IngredientType highlightedIngredient; 
-    public GameObject meatPrefab, breadPrefab, tomatoPrefab, marulPrefab; 
     private GameObject currentIngredient; 
-    private bool canSpawn = false; 
+    private bool canSpawn = false;
+    public GameObject[] ingredientPrefabs;
 
     private bool isMatching = false;
 
@@ -42,27 +42,11 @@ public class IngredientHolder : IngredientTypes
 
     void SpawnIngredient()
     {
-        GameObject prefabToSpawn = null;
+        int ingredientIndex = (int)highlightedIngredient; 
 
-        switch (highlightedIngredient)
+        if (ingredientIndex >= 0 && ingredientIndex < ingredientPrefabs.Length)
         {
-            case IngredientType.Meat:
-                prefabToSpawn = meatPrefab;
-                break;
-            case IngredientType.Bread:
-                prefabToSpawn = breadPrefab;
-                break;
-            case IngredientType.Tomato:
-                prefabToSpawn = tomatoPrefab;
-                break;
-            case IngredientType.Marul:
-                prefabToSpawn = marulPrefab;
-                break;
-        }
-
-        if (prefabToSpawn != null)
-        {
-            currentIngredient = Instantiate(prefabToSpawn, Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0, 0, 10), Quaternion.identity);
+            currentIngredient = Instantiate(ingredientPrefabs[ingredientIndex], Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0, 0, 10), Quaternion.identity);
         }
     }
 
