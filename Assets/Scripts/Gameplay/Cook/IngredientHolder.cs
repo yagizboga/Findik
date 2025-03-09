@@ -6,6 +6,7 @@ public class IngredientHolder : IngredientTypes
     private GameObject currentIngredient; 
     private bool canSpawn = false;
     public GameObject[] ingredientPrefabs;
+    private GameObject highlightedTrigger;
 
     private bool isMatching = false;
 
@@ -54,8 +55,12 @@ public class IngredientHolder : IngredientTypes
     {
         if (isMatching)
         {
-            Debug.Log("DROPPED after Match!");
+            //Debug.Log("DROPPED after Match!");
+            IngredientTrigger trigger = highlightedTrigger.GetComponent<IngredientTrigger>();
+            trigger.UpdateColor();
+            trigger.SetIsDropped(true);
             Destroy(currentIngredient);
+            highlightedTrigger = null;
         }
         else
         {
@@ -68,5 +73,10 @@ public class IngredientHolder : IngredientTypes
     public void SetIsMatching(bool match)
     {
         isMatching = match;
+    }
+
+    public void SetHighlightedTrigger(GameObject obj)
+    {
+        highlightedTrigger = obj;
     }
 }
