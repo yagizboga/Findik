@@ -10,12 +10,12 @@ public class IngredientBox : IngredientTypes
         ingredientHolder = FindFirstObjectByType<IngredientHolder>();
     }
 
-    private void OnMouseEnter()
+    private void OnMouseEnter() // no controller support
     {
         ingredientHolder.SetCanSpawn(true, boxType);
     }
 
-    private void OnMouseExit()
+    private void OnMouseExit() // no controller support
     {
         ingredientHolder.SetCanSpawn(false, IngredientType.Meat); 
     }

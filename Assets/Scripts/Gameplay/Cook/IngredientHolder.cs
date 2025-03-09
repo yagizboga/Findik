@@ -1,4 +1,6 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class IngredientHolder : IngredientTypes
 {
@@ -9,6 +11,7 @@ public class IngredientHolder : IngredientTypes
     private GameObject highlightedTrigger;
 
     private bool isMatching = false;
+    private bool canDrag = false;
 
     public void SetCanSpawn(bool canSpawnStatus, IngredientType ingredientType)
     {
@@ -23,9 +26,43 @@ public class IngredientHolder : IngredientTypes
         }
     }
 
+    public void SpawnIngredientInput(InputAction.CallbackContext context)
+    {
+        if (context.performed && canSpawn && currentIngredient == null)
+        {
+            SpawnIngredient();
+        }
+    }
+    public void DragIngredientInput(InputAction.CallbackContext context)
+    {
+        if (context.performed && currentIngredient != null)
+        {
+            canDrag = true;
+        }
+        else if (context.canceled)
+        {
+            canDrag = false;
+        }
+    }
+    public void ReleaseIngredientInput(InputAction.CallbackContext context)
+    {
+        if (context.canceled && currentIngredient != null)
+        {
+            canDrag = false;
+            DropIngredient();
+        }
+    }
+
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && canSpawn && currentIngredient == null)
+        if (canDrag && currentIngredient != null)
+        {
+            Vector2 pointerPos = Pointer.current.position.ReadValue(); 
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(pointerPos.x, pointerPos.y, 10));
+            currentIngredient.transform.position = worldPos;
+        }
+
+        /*if (Input.GetMouseButtonDown(0) && canSpawn && currentIngredient == null)
         {
             SpawnIngredient();
         }
@@ -38,7 +75,7 @@ public class IngredientHolder : IngredientTypes
         if (Input.GetMouseButtonUp(0) && currentIngredient != null)
         {
             DropIngredient();
-        }
+        }*/
     }
 
     void SpawnIngredient()

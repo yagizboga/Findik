@@ -7,6 +7,7 @@ public class IngredientTrigger : IngredientTypes
     private IngredientHolder ingredientHolder;
     private SpriteRenderer sprite;
     private Color targetColor;
+    private Color initialColor;
     private bool isDropped = false;
 
     private Recipe recipe;
@@ -14,6 +15,7 @@ public class IngredientTrigger : IngredientTypes
     {
         ingredientHolder = FindFirstObjectByType<IngredientHolder>();
         sprite = GetComponent<SpriteRenderer>();
+        initialColor = sprite.color;
         targetColor = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
         recipe = transform.parent.parent.GetComponent<Recipe>();
     }
@@ -62,5 +64,12 @@ public class IngredientTrigger : IngredientTypes
     public bool GetIsDropped()
     {
         return isDropped;
+    }
+
+    public void ResetRecipe()
+    {
+        //SetIsDropped(false);
+        isDropped = false;
+        sprite.color = initialColor;
     }
 }

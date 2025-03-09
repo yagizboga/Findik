@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Recipe : MonoBehaviour
@@ -7,6 +8,9 @@ public class Recipe : MonoBehaviour
     private GameObject[] triggerObj;
     private IngredientTrigger[] triggerScript;
     public ParticleSystem readyParticle;
+
+    private bool isReady = false;
+    public GameObject cookingTable;
 
 
     private void Start()
@@ -41,6 +45,44 @@ public class Recipe : MonoBehaviour
         readyParticle.Play();
         notReady.SetActive(false);
         ready.SetActive(true);
+        isReady = true;
         //Debug.Log("READY");
+
+
+        /////////////////////////////////////////////////
+        //// give the food to the hand of the dealer ////
+        /////////////////////////////////////////////////
+        
+
+        StartCoroutine(CloseTheTable());
+    }
+
+    private IEnumerator CloseTheTable()
+    {
+        yield return new WaitForSeconds(1.5f);
+        cookingTable.SetActive(false);
+        //Debug.Log("Reseting");
+        ResetRecipe();
+    }
+
+    public bool GetIsReady()
+    {
+        return isReady; 
+    }
+
+    public void SetIsReady(bool _ready)
+    {
+        isReady = _ready;
+    }
+
+    private void ResetRecipe()
+    {
+        notReady.SetActive(true);
+        ready.SetActive(false);
+
+        foreach (IngredientTrigger trigger in triggerScript)
+        {
+            trigger.ResetRecipe();
+        }
     }
 }
