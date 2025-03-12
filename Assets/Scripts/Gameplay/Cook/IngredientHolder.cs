@@ -13,6 +13,24 @@ public class IngredientHolder : IngredientTypes
     private bool isMatching = false;
     private bool canDrag = false;
 
+    private bool isOvenMatching = false;
+    private bool isGrillMatching = false;
+
+    public GameObject meatHolder;
+    public GameObject[] meatCookPlace;
+    private bool[] isMeatPlaceEmpty;
+
+    public GameObject cookableMeat;
+
+    private void Start()
+    {
+        isMeatPlaceEmpty = new bool[meatHolder.transform.childCount];
+        for(int i = 0; i < isMeatPlaceEmpty.Length; i++)
+        {
+            isMeatPlaceEmpty[i] = false;
+        }
+    }
+
     public void SetCanSpawn(bool canSpawnStatus, IngredientType ingredientType)
     {
         canSpawn = canSpawnStatus;
@@ -61,21 +79,6 @@ public class IngredientHolder : IngredientTypes
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(pointerPos.x, pointerPos.y, 10));
             currentIngredient.transform.position = worldPos;
         }
-
-        /*if (Input.GetMouseButtonDown(0) && canSpawn && currentIngredient == null)
-        {
-            SpawnIngredient();
-        }
-
-        if (Input.GetMouseButton(0) && currentIngredient != null)
-        {
-            currentIngredient.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0, 0, 10);
-        }
-
-        if (Input.GetMouseButtonUp(0) && currentIngredient != null)
-        {
-            DropIngredient();
-        }*/
     }
 
     void SpawnIngredient()
@@ -85,6 +88,11 @@ public class IngredientHolder : IngredientTypes
         if (ingredientIndex >= 0 && ingredientIndex < ingredientPrefabs.Length)
         {
             currentIngredient = Instantiate(ingredientPrefabs[ingredientIndex], Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0, 0, 10), Quaternion.identity);
+            if(highlightedIngredient == IngredientType.Meat)
+            {
+                Cookable cookable = currentIngredient.GetComponent<Cookable>();
+                cookable.SetIsCooking(false);
+            }
         }
     }
 
@@ -98,6 +106,25 @@ public class IngredientHolder : IngredientTypes
             trigger.SetIsDropped(true);
             Destroy(currentIngredient);
             highlightedTrigger = null;
+        }
+        else if (isGrillMatching)
+        {
+            Debug.Log("DROPPED after Grill Match!");
+            Grill grill = highlightedTrigger.GetComponent<Grill>();
+            grill.UpdateColor();
+            grill.SetIsDropped(true);
+            Destroy(currentIngredient);
+            highlightedTrigger = null;
+
+            for(int i = 0; i < isMeatPlaceEmpty.Length; i++)
+            {
+                if(isMeatPlaceEmpty[i] == false)
+                {
+                    Instantiate(cookableMeat, meatCookPlace[i].transform);
+                    isMeatPlaceEmpty[i] = true;
+                    break;
+                }
+            }
         }
         else
         {
@@ -115,5 +142,10 @@ public class IngredientHolder : IngredientTypes
     public void SetHighlightedTrigger(GameObject obj)
     {
         highlightedTrigger = obj;
+    }
+
+    public void SetIsGrillMatching(bool ismatch)
+    {
+        isGrillMatching = ismatch;
     }
 }

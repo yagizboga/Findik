@@ -28,14 +28,25 @@ public class IngredientTrigger : IngredientTypes
 
             if (ingredient != null && ingredient.ingredientType == requiredIngredient)
             {
-                //Debug.Log("Match: " + requiredIngredient);
-                ingredientHolder.SetIsMatching(true);
-                ingredientHolder.SetHighlightedTrigger(gameObject);
-            }
-
-            else if(ingredient == null)
-            {
-                Debug.LogError("ingredient is NULL!");
+                if(requiredIngredient != IngredientType.Meat)
+                {
+                    ingredientHolder.SetIsMatching(true);
+                    ingredientHolder.SetHighlightedTrigger(gameObject);
+                }
+                else if(requiredIngredient == IngredientType.Meat)
+                {
+                    Cookable cookable = collision.GetComponent<Cookable>();
+                    if(cookable.isCooked == true)
+                    {
+                        ingredientHolder.SetIsMatching(true);
+                        ingredientHolder.SetHighlightedTrigger(gameObject);
+                    }
+                    else
+                    {
+                        Debug.Log("is not COOKED");
+                    }
+                }
+                
             }
         }
     }
