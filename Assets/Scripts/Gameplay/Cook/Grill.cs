@@ -32,6 +32,10 @@ public class Grill : IngredientTypes
             {
                 Debug.LogError("ingredient is NULL!");
             }
+            else
+            {
+                ingredientHolder.SetIsGrillMatching(false);
+            }
         }
     }
 

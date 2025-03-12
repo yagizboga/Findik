@@ -115,12 +115,16 @@ public class IngredientHolder : IngredientTypes
             grill.SetIsDropped(true);
             Destroy(currentIngredient);
             highlightedTrigger = null;
+            isGrillMatching = false;
+            currentIngredient = null;
+            isMatching = false;
 
-            for(int i = 0; i < meatCookPlace.Length; i++)
+            for (int i = 0; i < meatCookPlace.Length; i++)
             {
                 if(meatCookPlace[i].transform.childCount == 0)
                 {
                     Instantiate(cookableMeat, meatCookPlace[i].transform);
+                    isGrillMatching = false;
                     break;
                 }
             }
@@ -129,8 +133,7 @@ public class IngredientHolder : IngredientTypes
         {
             Destroy(currentIngredient);
         }
-        currentIngredient = null;
-        isMatching = false;
+        
     }
 
     public void SetIsMatching(bool match)
