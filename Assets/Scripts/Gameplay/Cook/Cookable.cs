@@ -6,22 +6,25 @@ public class Cookable : MonoBehaviour
 {
     public bool isCooked = false;
     private bool isCooking = true;
+    private bool canDrag = false;
 
+    private void Update()
+    {
+        if (canDrag)
+        {
+            Vector2 pointerPos = Pointer.current.position.ReadValue();
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(pointerPos.x, pointerPos.y, 10));
+            transform.position = worldPos;
+        }
+    }
     public void SetIsCooking(bool sett)
     {
         isCooking = sett;
         Debug.Log("Is Cooking: " + isCooking);
     }
-    /*public void SpawnIngredientInput(InputAction.CallbackContext context)
-    {
-        if (context.performed && canSpawn && currentIngredient == null)
-        {
-            SpawnIngredient();
-        }
-    }
     public void DragIngredientInput(InputAction.CallbackContext context)
     {
-        if (context.performed && currentIngredient != null)
+        if (context.performed && canDrag)
         {
             canDrag = true;
         }
@@ -32,11 +35,12 @@ public class Cookable : MonoBehaviour
     }
     public void ReleaseIngredientInput(InputAction.CallbackContext context)
     {
-        if (context.canceled && currentIngredient != null)
+        if (context.canceled)
         {
             canDrag = false;
-            DropIngredient();
+            transform.position = Vector3.zero;
         }
-    }*/
+    }
+
 }
     

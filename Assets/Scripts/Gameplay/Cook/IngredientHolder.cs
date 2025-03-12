@@ -18,17 +18,17 @@ public class IngredientHolder : IngredientTypes
 
     public GameObject meatHolder;
     public GameObject[] meatCookPlace;
-    private bool[] isMeatPlaceEmpty;
+    //private bool[] isMeatPlaceEmpty;
 
     public GameObject cookableMeat;
 
     private void Start()
     {
-        isMeatPlaceEmpty = new bool[meatHolder.transform.childCount];
+       /* isMeatPlaceEmpty = new bool[meatHolder.transform.childCount];
         for(int i = 0; i < isMeatPlaceEmpty.Length; i++)
         {
             isMeatPlaceEmpty[i] = false;
-        }
+        }*/
     }
 
     public void SetCanSpawn(bool canSpawnStatus, IngredientType ingredientType)
@@ -116,12 +116,11 @@ public class IngredientHolder : IngredientTypes
             Destroy(currentIngredient);
             highlightedTrigger = null;
 
-            for(int i = 0; i < isMeatPlaceEmpty.Length; i++)
+            for(int i = 0; i < meatCookPlace.Length; i++)
             {
-                if(isMeatPlaceEmpty[i] == false)
+                if(meatCookPlace[i].transform.childCount == 0)
                 {
                     Instantiate(cookableMeat, meatCookPlace[i].transform);
-                    isMeatPlaceEmpty[i] = true;
                     break;
                 }
             }
