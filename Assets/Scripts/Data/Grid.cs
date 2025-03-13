@@ -51,6 +51,10 @@ public class Grid{
                 valueText[x,y].GetComponent<TextMeshPro>().fontSize = cellSize*4;
                 valueText[x,y].GetComponent<TextMeshPro>().sortingOrder = 7;
                 valueText[x,y].transform.SetParent(textParentCanvas.transform);
+
+                valueText[x,y].AddComponent<BoxCollider2D>();
+                valueText[x,y].GetComponent<BoxCollider2D>().isTrigger = true;
+                valueText[x,y].GetComponent<BoxCollider2D>().size = new Vector2(cellSize,cellSize);
             }
 
 
@@ -118,6 +122,10 @@ public class Grid{
         }
     }
 
+    public void PlaceToAnotherGrid(Grid grid){
+        
+    }
+
     public void TransposeMatrix(){
             int [,] tempValues = new int[height,width];
             for(int x = 0;x< width;x++){
@@ -133,6 +141,28 @@ public class Grid{
                     valueText[x,y].GetComponent<RectTransform>().anchoredPosition = cellMiddlePositions[x,y];
                 }
             }
+    }
+
+    public void SendRaycastToGrid(Grid grid){
+        for(int x = 0;x<GetSize().x;x++){
+            for(int y=0;y<GetSize().y;y++){
+                Vector2 cellRaycastPosition = new Ray(new Vector2(GetValueText(x,y).transform.position.x,GetValueText(x,y).transform.position.y),new Vector3(0,0,1)).GetPoint(10f);
+                if(GetCellValue(x,y) == 1){
+                    grid.SetCellValue((int)grid.GetWorldToGridPosition(cellRaycastPosition).x,(int)grid.GetWorldToGridPosition(cellRaycastPosition).y,1);
+                }
+
+
+            }
+        }
+
+    }
+
+    public void GetGridPosToGrid(Grid grid){
+        for(int x = 0;x<width;x++){
+            for(int y = 0;y<height;y++){
+                valueText[x,y].transform.position =grid.cellMiddlePositions[(int)grid.GetWorldToGridPosition(valueText[x,y].transform.position).x,(int)grid.GetWorldToGridPosition(valueText[x,y].transform.position).y];
+            }
+        }
     }
 
 

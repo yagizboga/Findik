@@ -4,15 +4,26 @@ using UnityEngine.InputSystem;
 
 public class ShelfItem : MonoBehaviour
 {
-     ItemScriptableObject item;
+    ItemScriptableObject item;
     Grid itemGrid;
     Grid shelfGrid;
     List<Vector2> lastCells;
     Vector2 lastCell;
 
     void Awake(){
-        item = new ItemScriptableObject(ItemScriptableObject.shelfItemType.key);
+        lastCells = new List<Vector2>();
+        //gridParent.GetComponent<SpriteRenderer>().sortingOrder = 8;
+        //gridParent.GetComponent<SpriteRenderer>().sprite = item.GetSprite();
+
+    }
+
+    public void Initialize(ItemScriptableObject.shelfItemType type){
         GameObject gridParent = new GameObject();
+        item = new ItemScriptableObject();
+        item.Initialize(type);
+        if(GetComponent<SpriteRenderer>() == null){
+            gridParent.AddComponent<SpriteRenderer>();
+        }
         gridParent.transform.SetParent(transform);
         gridParent.transform.localPosition = new Vector3(0,0,0);
         itemGrid = new Grid(item.size.x,item.size.y,1,gridParent.transform.position,gridParent);
@@ -21,11 +32,6 @@ public class ShelfItem : MonoBehaviour
                 itemGrid.SetCellValue(x,y,item.values[x,y]);
             }
         }
-        lastCells = new List<Vector2>();
-        gameObject.AddComponent<SpriteRenderer>();
-        gameObject.GetComponent<SpriteRenderer>().sortingOrder = 8;
-        gameObject.GetComponent<SpriteRenderer>().color = new Color32(255,255,255,170);
-
     }
 
     void Start(){
@@ -37,7 +43,7 @@ public class ShelfItem : MonoBehaviour
             shelfGrid = GameObject.FindGameObjectWithTag("shelf").GetComponent<ShelfUI>().GetShelfGrid();
         }
         shelfGrid.ClearGrid();
-        SendRaycastToGrid(shelfGrid);
+        itemGrid.SendRaycastToGrid(shelfGrid);
     }
 
     public void SetTransformToMouse(){
@@ -47,23 +53,13 @@ public class ShelfItem : MonoBehaviour
         transform.position = new Vector3(mousePos.x,mousePos.y,0);
     }
 
-
-    void SendRaycastToGrid(Grid grid){
-        for(int x = 0;x<itemGrid.GetSize().x;x++){
-            for(int y=0;y<itemGrid.GetSize().y;y++){
-                Vector2 cellRaycastPosition = new Ray(new Vector2(itemGrid.GetValueText(x,y).transform.position.x,itemGrid.GetValueText(x,y).transform.position.y),new Vector3(0,0,1)).GetPoint(10f);
-                //Debug.DrawLine(new Vector2(itemGrid.GetValueText(x,y).transform.position.x,itemGrid.GetValueText(x,y).transform.position.y),new Vector3(itemGrid.GetValueText(x,y).transform.position.x,itemGrid.GetValueText(x,y).transform.position.y,0) + new Vector3(0,0,20),Color.red,0.1f);
-                //Debug.Log(x + " " + y + " " + cellRaycastPosition);
-                Debug.Log(grid.GetWorldToGridPosition(cellRaycastPosition));
-                if(itemGrid.GetCellValue(x,y) == 1){
-                    grid.SetCellValue((int)grid.GetWorldToGridPosition(cellRaycastPosition).x,(int)grid.GetWorldToGridPosition(cellRaycastPosition).y,1);
-                }
-
-
-        }
+    public Grid GetItemGrid(){
+        return itemGrid;
     }
 
 
 
+
+
 }
-}
+
