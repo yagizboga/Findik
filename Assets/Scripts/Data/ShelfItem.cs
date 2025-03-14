@@ -35,12 +35,12 @@ public class ShelfItem : MonoBehaviour
     }
 
     void Start(){
-        shelfGrid = GameObject.FindGameObjectWithTag("shelf").GetComponent<ShelfUI>().GetShelfGrid();
+        shelfGrid = transform.parent.GetComponent<ShelfUI>().GetShelfGrid();
     }
 
     void Update(){
         if(shelfGrid == null){
-            shelfGrid = GameObject.FindGameObjectWithTag("shelf").GetComponent<ShelfUI>().GetShelfGrid();
+            shelfGrid = transform.parent.GetComponent<ShelfUI>().GetShelfGrid();
         }
         shelfGrid.ClearGrid();
         itemGrid.SendRaycastToGrid(shelfGrid);
@@ -56,6 +56,8 @@ public class ShelfItem : MonoBehaviour
     public Grid GetItemGrid(){
         return itemGrid;
     }
+
+    
 
 
 

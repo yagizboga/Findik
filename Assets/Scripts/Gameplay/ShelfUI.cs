@@ -13,6 +13,7 @@ public class ShelfUI : MonoBehaviour
     List<Vector2> lastCells;
     GameObject currentItem;
     bool isDragging = false;
+    Vector2 [,] oldPositions;
 
 
     void Awake(){
@@ -38,12 +39,30 @@ public class ShelfUI : MonoBehaviour
 
     public void DragHandler(InputAction.CallbackContext ctx ){
         if(ctx.performed && shelf.GetComponent<shelf>().isActive){
+            oldPositions = new Vector2 [(int)currentItem.GetComponent<ShelfItem>().GetItemGrid().GetSize().x,(int)currentItem.GetComponent<ShelfItem>().GetItemGrid().GetSize().y];
             isDragging = true;
+            for(int x = 0;x<currentItem.GetComponent<ShelfItem>().GetItemGrid().GetSize().x;x++){
+                for(int y = 0;y<currentItem.GetComponent<ShelfItem>().GetItemGrid().GetSize().y;y++){
+                    oldPositions[x,y] = currentItem.GetComponent<ShelfItem>().GetItemGrid().GetGridPosToGrid(shelfGrid,x,y);
+                    Debug.Log(oldPositions[x,y]);
+                }
+            }
         }
         else if(ctx.canceled && shelf.GetComponent<shelf>().isActive){
             isDragging = false;
-            if(currentItem != null){
-                currentItem.GetComponent<ShelfItem>().GetItemGrid().GetGridPosToGrid(shelfGrid);
+            if(currentItem != null && currentItem.GetComponent<ShelfItem>().GetItemGrid().isOnGrid(shelfGrid)){
+                currentItem.GetComponent<ShelfItem>().GetItemGrid().SetGridPosToGrid(shelfGrid);
+                
+            }
+            else if(currentItem != null && !currentItem.GetComponent<ShelfItem>().GetItemGrid().isOnGrid(shelfGrid)){
+                for(int x = 0;x<oldPositions.GetLength(0);x++){
+                    for(int y=0;y<oldPositions.GetLength(1);y++){
+                        Debug.Log(oldPositions[x,y]);
+                        currentItem.GetComponent<ShelfItem>().GetItemGrid().SetCellPosition(x,y,(int)oldPositions[x,y].x,(int)oldPositions[x,y].y);
+                    }
+                }
+                //Debug.Log(oldPositions[0,0]);
+                oldPositions = null;
             }
         }
     }  

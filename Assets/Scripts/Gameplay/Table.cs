@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class Table : MonoBehaviour, IInteractable
 {
-    [SerializeField] GameObject tableCanvas;
+    [SerializeField] GameObject table;
     bool isActive;
     public void Interact(){
         if(isActive){
-            tableCanvas.gameObject.SetActive(false);
+            table.gameObject.SetActive(false);
             isActive = false;
         }
         else if(!isActive){
-            tableCanvas.gameObject.SetActive(true);
+            table.gameObject.SetActive(true);
             isActive = true;
         }
     }

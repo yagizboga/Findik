@@ -2,6 +2,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using System.Collections.Specialized;
 using TMPro;
+using Unity.Collections;
 
 public class Grid{
     int width,height;
@@ -41,7 +42,7 @@ public class Grid{
                                             ,new Vector3(cellMiddlePositions[x,y].x + cellSize/20f,cellMiddlePositions[x,y].y,0)
                                             ,Color.red,1000f);
                 valueText[x,y] = new GameObject();
-                Debug.Log(valueText[x,y] + " " + valueText[x,y].transform.position);
+//                Debug.Log(valueText[x,y] + " " + valueText[x,y].transform.position);
                 valueText[x,y].AddComponent<TextMeshPro>();
                 valueText[x,y].GetComponent<RectTransform>().anchoredPosition = cellMiddlePositions[x,y];
                 valueText[x,y].gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(cellSize,cellSize);
@@ -157,12 +158,63 @@ public class Grid{
 
     }
 
-    public void GetGridPosToGrid(Grid grid){
+    public void SetGridPosToGrid(Grid grid){
         for(int x = 0;x<width;x++){
             for(int y = 0;y<height;y++){
                 valueText[x,y].transform.position =grid.cellMiddlePositions[(int)grid.GetWorldToGridPosition(valueText[x,y].transform.position).x,(int)grid.GetWorldToGridPosition(valueText[x,y].transform.position).y];
             }
         }
+    }
+
+    public bool isOnGrid(Grid grid){
+        for(int x = 0;x<width;x++){
+            for(int y =0;y<height;y++){
+                if(grid.GetWorldToGridPosition(new Vector3(valueText[x,y].transform.position.x,valueText[x,y].transform.position.y,0)).x > grid.GetSize().x ||
+                    grid.GetWorldToGridPosition(new Vector3(valueText[x,y].transform.position.x,valueText[x,y].transform.position.y,0)).y > grid.GetSize().y ||
+                    grid.GetWorldToGridPosition(new Vector3(valueText[x,y].transform.position.x,valueText[x,y].transform.position.y,0)).x < 0 ||
+                    grid.GetWorldToGridPosition(new Vector3(valueText[x,y].transform.position.x,valueText[x,y].transform.position.y,0)).y < 0)
+                    {
+                       // Debug.Log(grid.GetWorldToGridPosition(new Vector3(valueText[x,y].transform.position.x,valueText[x,y].transform.position.y,0)).x + " " +
+                        //        grid.GetWorldToGridPosition(new Vector3(valueText[x,y].transform.position.x,valueText[x,y].transform.position.y,0)).y
+                         //       + " " + width + " "  + height);
+                        return false;
+
+                    }
+            }
+        }
+        return true;
+    }
+
+    public Vector3[,] GetCellWorldPositions(){
+        Vector3[,] positions = new Vector3 [width,height];
+        for(int x = 0;x<width;x++){
+            for(int y = 0;y<height;y++){
+                positions[x,y] = valueText[x,y].transform.position;
+            }
+        }
+        return positions;
+    }
+
+    public Vector2 GetGridPosToGrid(Grid grid,int xPos,int yPos){
+        Vector2 [,] temp = new Vector2[width,height];
+        for(int x = 0;x<width;x++){
+            for(int y = 0;y<height;y++){
+//                Debug.Log(width + " " + height + " " );
+//                Debug.Log(grid.cellMiddlePositions[(int)grid.GetWorldToGridPosition(valueText[x,y].transform.position).x,(int)grid.GetWorldToGridPosition(valueText[x,y].transform.position).y]);
+                temp[x,y] = grid.cellMiddlePositions[(int)grid.GetWorldToGridPosition(valueText[x,y].transform.position).x,(int)grid.GetWorldToGridPosition(valueText[x,y].transform.position).y];
+            }
+        }
+        if(xPos < width && yPos < height && xPos >= 0 && yPos >= 0){
+            return temp[xPos,yPos];
+        }
+        else{
+            return new Vector2(-1,-1);
+        }
+
+    }
+
+    public void SetCellPosition(int x,int y,int posX,int posY){
+        valueText[x,y].transform.position = new Vector2(posX,posY);
     }
 
 
