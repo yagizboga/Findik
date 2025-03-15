@@ -6,11 +6,19 @@ public class Cookable : MonoBehaviour
 {
     public bool isCooked = false;
     private bool isCooking = true;
+    private bool isDragging = false;
     private bool canDrag = false;
+    private bool isDragBlocked = false;
+    private IngredientHolder ingredientHolder;
+
+    private void Start()
+    {
+        ingredientHolder = GameObject.FindGameObjectWithTag("Ingredient Holder").GetComponent<IngredientHolder>();
+    }
 
     private void Update()
     {
-        if (canDrag)
+        if (isDragging)
         {
             Vector2 pointerPos = Pointer.current.position.ReadValue();
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(pointerPos.x, pointerPos.y, 10));
@@ -20,27 +28,41 @@ public class Cookable : MonoBehaviour
     public void SetIsCooking(bool sett)
     {
         isCooking = sett;
-        Debug.Log("Is Cooking: " + isCooking);
+        isDragBlocked = true;
+        //Debug.Log("Is Cooking: " + isCooking);
     }
     public void DragIngredientInput(InputAction.CallbackContext context)
     {
-        if (context.performed && canDrag)
+        if (context.performed && canDrag && !isDragBlocked)
         {
-            canDrag = true;
+            isDragging = true;
         }
-        else if (context.canceled)
+        /*else if (context.canceled)
         {
-            canDrag = false;
-        }
+            isDragging = false;
+        }*/
     }
     public void ReleaseIngredientInput(InputAction.CallbackContext context)
     {
-        if (context.canceled)
+        if (context.canceled && isDragging && !isDragBlocked)
         {
-            canDrag = false;
-            transform.position = Vector3.zero;
+            isDragging = false;
+            ingredientHolder.SetIsGrillMatching(false);
+            ingredientHolder.DropIngredient(gameObject);
+            //transform.localPosition = Vector3.zero;
         }
     }
+
+    private void OnMouseEnter()
+    {
+        canDrag = true;
+    }
+
+    private void OnMouseExit()
+    {
+        canDrag = false;
+    }
+
 
 }
     
