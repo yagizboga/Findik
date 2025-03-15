@@ -43,7 +43,7 @@ public class IngredientTrigger : IngredientTypes
                     }
                     else
                     {
-                        Debug.Log("is not COOKED");
+                        //Debug.Log("is not COOKED");
                     }
                 }
                 

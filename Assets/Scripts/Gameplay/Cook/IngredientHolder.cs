@@ -93,16 +93,6 @@ public class IngredientHolder : IngredientTypes
             {
                 Cookable cookable = currentIngredient.GetComponent<Cookable>();
                 cookable.SetIsCooking(false);
-
-                PlayerInput playerInput = currentIngredient.GetComponent<PlayerInput>();
-                PlayerInput player = FindFirstObjectByType<PlayerInput>(); // Ana oyuncu giriþini bul
-
-                if (playerInput != null && player != null)
-                {
-                    // Mevcut kontrol þemasýný al ve yeni nesneye aktar
-                    string currentScheme = player.currentControlScheme;
-                    playerInput.SwitchCurrentControlScheme(currentScheme, player.devices.ToArray());
-                }
             }
         }
     }
@@ -128,7 +118,6 @@ public class IngredientHolder : IngredientTypes
             //Debug.Log("DROPPED after Grill Match!");
             isGrillMatching = false;
             Grill grill = highlightedTrigger.GetComponent<Grill>();
-            grill.UpdateColor();
             grill.SetIsDropped(true);
             Destroy(ingredient);
             highlightedTrigger = null;

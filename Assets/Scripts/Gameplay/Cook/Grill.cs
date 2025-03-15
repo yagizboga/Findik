@@ -7,11 +7,9 @@ public class Grill : IngredientTypes
     private IngredientHolder ingredientHolder;
     private bool isDropped = false;
 
-    //private Recipe recipe;
     private void Start()
     {
         ingredientHolder = FindFirstObjectByType<IngredientHolder>();
-        //recipe = transform.parent.parent.GetComponent<Recipe>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -22,8 +20,6 @@ public class Grill : IngredientTypes
 
             if (ingredient != null && ingredient.ingredientType == requiredIngredient)
             {
-                //Debug.Log("Match: " + requiredIngredient);
-                //ingredientHolder.SetIsMatching(true);
                 ingredientHolder.SetHighlightedTrigger(gameObject);
                 ingredientHolder.SetIsGrillMatching(true);
             }
@@ -43,33 +39,13 @@ public class Grill : IngredientTypes
     {
         if (collision.CompareTag("Ingredient"))
         {
-            //ingredientHolder.SetIsMatching(false);
             ingredientHolder.SetIsGrillMatching(false);
             ingredientHolder.SetHighlightedTrigger(null);
         }
     }
 
-    public void UpdateColor()
-    {
-        //sprite.color = targetColor;
-        //Debug.Log("UPDATED COLOR!");
-    }
-
     public void SetIsDropped(bool set)
     {
         isDropped = set;
-        //recipe.CheckRecipeReady();
-    }
-
-    public bool GetIsDropped()
-    {
-        return isDropped;
-    }
-
-    public void ResetRecipe()
-    {
-        //SetIsDropped(false);
-        isDropped = false;
-        //sprite.color = initialColor;
     }
 }
