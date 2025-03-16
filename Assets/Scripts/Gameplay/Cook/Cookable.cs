@@ -11,11 +11,9 @@ public class Cookable : IngredientTypes
     public bool isDragBlocked = false;
     private IngredientHolder ingredientHolder;
     private Ingredient ingredient;
-    public Color cookedMeatColor;
-    public Color cookedBreadColor;
 
-    public Color burnedMeatColor;
-    public Color burnedBreadColor;
+    public Color cookedColor;
+    public Color burnedColor;
 
     private SpriteRenderer spriteRenderer;
 
@@ -23,7 +21,7 @@ public class Cookable : IngredientTypes
     private float cookTime = 5f;
     private float burnTime = 10f;
 
-    private float proximityThreshold = 0.275f;
+    private float proximityThreshold = 0.25f;
 
 
     public static GameObject instance;
@@ -45,32 +43,15 @@ public class Cookable : IngredientTypes
             if (cookTimer >= cookTime && cookTimer < burnTime && !isCooked)
             {
                 isCooked = true;
-                Debug.Log("PÝÞTÝ"); 
-
-                if(ingredient.ingredientType == IngredientType.Meat)
-                {
-                    spriteRenderer.color = cookedMeatColor;
-                }
-                else if (ingredient.ingredientType == IngredientType.Bread)
-                {
-                    spriteRenderer.color = cookedBreadColor;
-                }
+                Debug.Log("PÝÞTÝ");
+                spriteRenderer.color = cookedColor;
             }
             else if(cookTimer >= burnTime && isCooked)
             {
                 Debug.Log("YANDI MAL");
                 isCooking = false;
                 isCooked = false;
-
-                if (ingredient.ingredientType == IngredientType.Meat)
-                {
-                    spriteRenderer.color = burnedMeatColor;
-                    Debug.Log("döndüL");
-                }
-                else if (ingredient.ingredientType == IngredientType.Bread)
-                {
-                    spriteRenderer.color = burnedBreadColor;
-                }
+                spriteRenderer.color = burnedColor;
             }
         }
 

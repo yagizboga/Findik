@@ -16,11 +16,13 @@ public class IngredientHolder : IngredientTypes
     private bool isOvenMatching = false;
     private bool isGrillMatching = false;
 
-    public GameObject meatHolder;
+    //public GameObject meatHolder;
     public GameObject[] meatCookPlace;
+    public GameObject[] breadCookPlace;
     //private bool[] isMeatPlaceEmpty;
 
     public GameObject cookableMeat;
+    public GameObject cookableBread;
 
     private void Start()
     {
@@ -135,6 +137,29 @@ public class IngredientHolder : IngredientTypes
                 }
             }
         }
+        else if (isOvenMatching)
+        {
+            //Debug.Log("DROPPED after Grill Match!");
+            isOvenMatching = false;
+            Oven oven = highlightedTrigger.GetComponent<Oven>();
+            oven.SetIsDropped(true);
+            Destroy(ingredient);
+            highlightedTrigger = null;
+            isOvenMatching = false;
+            oven = null;
+            isMatching = false;
+
+            for (int i = 0; i < breadCookPlace.Length; i++)
+            {
+                if (breadCookPlace[i].transform.childCount == 0)
+                {
+                    isOvenMatching = false;
+                    GameObject inst = Instantiate(cookableBread, breadCookPlace[i].transform);
+                    inst.transform.localPosition = Vector3.zero;
+                    break;
+                }
+            }
+        }
         else
         {
             if (ingredient == currentIngredient)
@@ -167,5 +192,13 @@ public class IngredientHolder : IngredientTypes
             isGrillMatching = ismatch;
         else if (ismatch == false)
             isGrillMatching = ismatch;
+    }
+
+    public void SetIsOvenMatching(bool ismatch)
+    {
+        if (ismatch == true && canDrag)
+            isOvenMatching = ismatch;
+        else if (ismatch == false)
+            isOvenMatching = ismatch;
     }
 }

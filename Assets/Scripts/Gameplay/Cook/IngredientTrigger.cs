@@ -26,9 +26,9 @@ public class IngredientTrigger : IngredientTypes
         {
             Ingredient ingredient = collision.GetComponent<Ingredient>();
 
-            if (ingredient != null && ingredient.ingredientType == requiredIngredient)
+            if (ingredient != null && ingredient.ingredientType == requiredIngredient && !isDropped)
             {
-                if(requiredIngredient != IngredientType.Meat)
+                if(requiredIngredient != IngredientType.Meat && requiredIngredient != IngredientType.Bread)
                 {
                     ingredientHolder.SetIsMatching(true);
                     ingredientHolder.SetHighlightedTrigger(gameObject);
@@ -46,7 +46,20 @@ public class IngredientTrigger : IngredientTypes
                         //Debug.Log("is not COOKED");
                     }
                 }
-                
+                else if (requiredIngredient == IngredientType.Bread)
+                {
+                    Cookable cookable = collision.GetComponent<Cookable>();
+                    if (cookable.isCooked == true)
+                    {
+                        ingredientHolder.SetIsMatching(true);
+                        ingredientHolder.SetHighlightedTrigger(gameObject);
+                    }
+                    else
+                    {
+                        //Debug.Log("is not COOKED");
+                    }
+                }
+
             }
         }
     }

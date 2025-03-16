@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 257444317237614882}
   - component: {fileID: 2651530536119949418}
   - component: {fileID: 5695654643226818641}
+  - component: {fileID: 5052937889314354606}
   m_Layer: 11
   m_Name: Bread
   m_TagString: Ingredient
@@ -80,7 +81,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 6
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.98039216, g: 0.5254902, b: 0, a: 1}
+  m_Color: {r: 0.9921569, g: 0.7568628, b: 0.47450984, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -176,3 +177,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ingredientType: 0
+--- !u!114 &5052937889314354606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374071529437790920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b601ae0a319358e4d918c205fa82a6e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCooked: 0
+  canDrag: 0
+  isDragBlocked: 0
+  cookedColor: {r: 0, g: 0, b: 0, a: 0}
+  burnedColor: {r: 0, g: 0, b: 0, a: 0}
