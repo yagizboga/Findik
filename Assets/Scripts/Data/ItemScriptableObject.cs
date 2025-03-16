@@ -25,13 +25,26 @@ public class ItemScriptableObject : ScriptableObject
             _image = Resources.Load<Sprite>("testItem");
 
         }
+        else if(type == shelfItemType.GOLDANDCOPPERSWORD){
+            values = new int [1,3] {{1,1,1}};
+            size = new Vector2Int(1,3);
+            _image = Resources.Load<Sprite>("Assets/items/GOLDANDCOPPERSWORD");
+        }
+        else if(type == shelfItemType.UGLYRIPPEDOFFTOYHEAD){
+            values = new int [1,1] {{1}};
+            size = new Vector2Int(1,1);
+            _image = Resources.Load<Sprite>("Assets/items/UGLYRIPPEDOFFTOYHEAD");
+
+        }
     }
 
 
 
     public enum shelfItemType{
         book,
-        key
+        key,
+        GOLDANDCOPPERSWORD,
+        UGLYRIPPEDOFFTOYHEAD
     }
     public Sprite GetSprite(){
         return _image;

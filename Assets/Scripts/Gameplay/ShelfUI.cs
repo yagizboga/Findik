@@ -13,25 +13,28 @@ public class ShelfUI : MonoBehaviour
     List<Vector2> lastCells;
     GameObject currentItem;
     bool isDragging = false;
-    Vector2 [,] oldPositions;
+    Vector2 oldPosition;
 
 
     void Awake(){
         shelfGrid = new Grid(16,9,1,gridStartPos.position,textParentCanvas);
         lastCells = new List<Vector2>();
+        oldPosition = new Vector2();
         
         
 
     }
 
     void Start(){
-        NewItem(ItemScriptableObject.shelfItemType.key);
+        NewItem(ItemScriptableObject.shelfItemType.GOLDANDCOPPERSWORD);
+        NewItem(ItemScriptableObject.shelfItemType.UGLYRIPPEDOFFTOYHEAD);
         //NewItem(ItemScriptableObject.shelfItemType.book);
     }
     void Update(){
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        RaycastHit hit;
-        if(Physics.Raycast(mousePos,new Vector3(0,0,1),out hit,100,default)){
+        RaycastHit2D hit = Physics2D.Raycast(mousePos,new Vector3(0,0,1),100f);
+        if(hit.collider != null){
+            Debug.Log(hit.collider.gameObject);
             if(hit.collider.CompareTag("itemCell")){
                 currentItem = hit.collider.gameObject.transform.parent.transform.parent.gameObject;
             }
@@ -46,15 +49,10 @@ public class ShelfUI : MonoBehaviour
 
     public void DragHandler(InputAction.CallbackContext ctx ){
         if(ctx.performed && shelf.GetComponent<shelf>().isActive && currentItem != null){
+            //currentItem.GetComponent<ShelfItem>().GetItemGrid().AlignToChild();
             //currentItem.GetComponent<ShelfItem>().GetItemGrid().AlignToCenter(mousePos);
-            oldPositions = new Vector2 [(int)currentItem.GetComponent<ShelfItem>().GetItemGrid().GetSize().x,(int)currentItem.GetComponent<ShelfItem>().GetItemGrid().GetSize().y];
+            oldPosition = new Vector2(currentItem.gameObject.transform.position.x,currentItem.gameObject.transform.position.y);
             isDragging = true;
-            for(int x = 0;x<currentItem.GetComponent<ShelfItem>().GetItemGrid().GetSize().x;x++){
-                for(int y = 0;y<currentItem.GetComponent<ShelfItem>().GetItemGrid().GetSize().y;y++){
-                    oldPositions[x,y] = currentItem.GetComponent<ShelfItem>().GetItemGrid().GetCellWorldPositions(x,y);
-                    Debug.Log(oldPositions[x,y]);
-                }
-            }
         }
         else if(ctx.canceled && shelf.GetComponent<shelf>().isActive){
             isDragging = false;
@@ -63,14 +61,9 @@ public class ShelfUI : MonoBehaviour
                 
             }
             else if(currentItem != null && !currentItem.GetComponent<ShelfItem>().GetItemGrid().isOnGrid(shelfGrid)){
-                for(int x = 0;x<oldPositions.GetLength(0);x++){
-                    for(int y=0;y<oldPositions.GetLength(1);y++){
-                        Debug.Log(oldPositions[x,y]);
-                        currentItem.GetComponent<ShelfItem>().GetItemGrid().SetCellPosition(x,y,oldPositions[x,y].x,oldPositions[x,y].y);
-                    }
-                }
-                //Debug.Log(oldPositions[0,0]);
-                oldPositions = null;
+                
+                currentItem.transform.position = new Vector3(oldPosition.x,oldPosition.y,0);
+                oldPosition = new Vector2();
             }
         }
     }  

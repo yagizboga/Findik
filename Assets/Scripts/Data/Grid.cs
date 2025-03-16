@@ -205,5 +205,22 @@ public class Grid{
         }
     }
 
+    public void AlignToChild(){
+        Vector2 [,]temp = new Vector2[width,height];
+        for(int x = 0;x<width;x++){
+            for(int y=0;y<height;y++){
+                temp[x,y] = valueText[x,y].transform.position;
+            }
+        }
+
+        valueText[0,0].transform.parent.transform.parent.gameObject.transform.position = new Vector3(width * cellSize / 2f , height * cellSize / 2f,0);
+    
+        for(int x = 0;x<width;x++){
+            for(int y=0;y<height;y++){
+                valueText[x,y].transform.position = temp[x,y];
+            }
+        }
+    }
+
 
 }

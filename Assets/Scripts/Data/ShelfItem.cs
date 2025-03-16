@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using Unity.VisualScripting;
 
 public class ShelfItem : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class ShelfItem : MonoBehaviour
     Grid shelfGrid;
     List<Vector2> lastCells;
     Vector2 lastCell;
+    GameObject sprite;
 
     void Awake(){
         lastCells = new List<Vector2>();
@@ -21,9 +23,13 @@ public class ShelfItem : MonoBehaviour
         GameObject gridParent = new GameObject();
         item = new ItemScriptableObject();
         item.Initialize(type);
-        if(GetComponent<SpriteRenderer>() == null){
-            gridParent.AddComponent<SpriteRenderer>();
+        sprite = new GameObject();
+        sprite.transform.parent = gridParent.transform;
+        if(sprite.GetComponent<SpriteRenderer>() == null){
+            sprite.AddComponent<SpriteRenderer>();
         }
+        sprite.GetComponent<SpriteRenderer>().sprite = item.GetSprite();
+        sprite.GetComponent<SpriteRenderer>().sortingOrder = 1;
         gridParent.transform.SetParent(transform);
         gridParent.transform.localPosition = new Vector3(0,0,0);
         itemGrid = new Grid(item.size.x,item.size.y,1,gridParent.transform.position,gridParent);
@@ -32,7 +38,7 @@ public class ShelfItem : MonoBehaviour
                 itemGrid.SetCellValue(x,y,item.values[x,y]);
             }
         }
-        itemGrid.ToItem();
+        itemGrid.ToItem(); 
     }
 
     void Start(){
