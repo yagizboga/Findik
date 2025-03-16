@@ -106,7 +106,7 @@ public class Grid{
     }
 
 
-    public void AlingToCenter(Vector3 alignTo){
+    public void AlignToCenter(Vector3 alignTo){
         textParentCanvas.transform.position = alignTo - new Vector3(width * cellSize / 2 , height * cellSize / 2);
     }
 
@@ -123,9 +123,6 @@ public class Grid{
         }
     }
 
-    public void PlaceToAnotherGrid(Grid grid){
-        
-    }
 
     public void TransposeMatrix(){
             int [,] tempValues = new int[height,width];
@@ -185,36 +182,27 @@ public class Grid{
         return true;
     }
 
-    public Vector3[,] GetCellWorldPositions(){
-        Vector3[,] positions = new Vector3 [width,height];
-        for(int x = 0;x<width;x++){
-            for(int y = 0;y<height;y++){
-                positions[x,y] = valueText[x,y].transform.position;
-            }
-        }
-        return positions;
+    public Vector2 GetCellWorldPositions(int x,int y){
+            return valueText[x,y].transform.position;
     }
 
     public Vector2 GetGridPosToGrid(Grid grid,int xPos,int yPos){
-        Vector2 [,] temp = new Vector2[width,height];
-        for(int x = 0;x<width;x++){
-            for(int y = 0;y<height;y++){
-//                Debug.Log(width + " " + height + " " );
-//                Debug.Log(grid.cellMiddlePositions[(int)grid.GetWorldToGridPosition(valueText[x,y].transform.position).x,(int)grid.GetWorldToGridPosition(valueText[x,y].transform.position).y]);
-                temp[x,y] = grid.cellMiddlePositions[(int)grid.GetWorldToGridPosition(valueText[x,y].transform.position).x,(int)grid.GetWorldToGridPosition(valueText[x,y].transform.position).y];
-            }
-        }
         if(xPos < width && yPos < height && xPos >= 0 && yPos >= 0){
-            return temp[xPos,yPos];
+            return grid.GetWorldToGridPosition(valueText[xPos,yPos].transform.position);
         }
-        else{
-            return new Vector2(-1,-1);
-        }
-
+        else{return new Vector2(-1,-1);}
     }
 
-    public void SetCellPosition(int x,int y,int posX,int posY){
+    public void SetCellPosition(int x,int y,float posX,float posY){
         valueText[x,y].transform.position = new Vector2(posX,posY);
+    }
+
+    public void ToItem(){
+        for(int x = 0;x< width;x++){
+            for(int y = 0;y<height;y++){
+                valueText[x,y].tag = "itemCell";
+            }
+        }
     }
 
 

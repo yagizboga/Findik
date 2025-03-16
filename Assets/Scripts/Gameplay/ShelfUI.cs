@@ -26,24 +26,32 @@ public class ShelfUI : MonoBehaviour
 
     void Start(){
         NewItem(ItemScriptableObject.shelfItemType.key);
-        NewItem(ItemScriptableObject.shelfItemType.book);
-
-        currentItem = NewItem(ItemScriptableObject.shelfItemType.key);
+        //NewItem(ItemScriptableObject.shelfItemType.book);
     }
     void Update(){
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        RaycastHit hit;
+        if(Physics.Raycast(mousePos,new Vector3(0,0,1),out hit,100,default)){
+            if(hit.collider.CompareTag("itemCell")){
+                currentItem = hit.collider.gameObject.transform.parent.transform.parent.gameObject;
+            }
+            else{
+                currentItem = null;
+            }
+        }
         if(isDragging && currentItem != null){
             currentItem.GetComponent<ShelfItem>().SetTransformToMouse();
         }
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     } 
 
     public void DragHandler(InputAction.CallbackContext ctx ){
-        if(ctx.performed && shelf.GetComponent<shelf>().isActive){
+        if(ctx.performed && shelf.GetComponent<shelf>().isActive && currentItem != null){
+            //currentItem.GetComponent<ShelfItem>().GetItemGrid().AlignToCenter(mousePos);
             oldPositions = new Vector2 [(int)currentItem.GetComponent<ShelfItem>().GetItemGrid().GetSize().x,(int)currentItem.GetComponent<ShelfItem>().GetItemGrid().GetSize().y];
             isDragging = true;
             for(int x = 0;x<currentItem.GetComponent<ShelfItem>().GetItemGrid().GetSize().x;x++){
                 for(int y = 0;y<currentItem.GetComponent<ShelfItem>().GetItemGrid().GetSize().y;y++){
-                    oldPositions[x,y] = currentItem.GetComponent<ShelfItem>().GetItemGrid().GetGridPosToGrid(shelfGrid,x,y);
+                    oldPositions[x,y] = currentItem.GetComponent<ShelfItem>().GetItemGrid().GetCellWorldPositions(x,y);
                     Debug.Log(oldPositions[x,y]);
                 }
             }
@@ -58,7 +66,7 @@ public class ShelfUI : MonoBehaviour
                 for(int x = 0;x<oldPositions.GetLength(0);x++){
                     for(int y=0;y<oldPositions.GetLength(1);y++){
                         Debug.Log(oldPositions[x,y]);
-                        currentItem.GetComponent<ShelfItem>().GetItemGrid().SetCellPosition(x,y,(int)oldPositions[x,y].x,(int)oldPositions[x,y].y);
+                        currentItem.GetComponent<ShelfItem>().GetItemGrid().SetCellPosition(x,y,oldPositions[x,y].x,oldPositions[x,y].y);
                     }
                 }
                 //Debug.Log(oldPositions[0,0]);

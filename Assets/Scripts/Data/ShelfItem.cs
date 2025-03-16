@@ -32,6 +32,7 @@ public class ShelfItem : MonoBehaviour
                 itemGrid.SetCellValue(x,y,item.values[x,y]);
             }
         }
+        itemGrid.ToItem();
     }
 
     void Start(){
@@ -49,7 +50,7 @@ public class ShelfItem : MonoBehaviour
     public void SetTransformToMouse(){
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         itemGrid.UpdateGridPosition(transform.position);
-        itemGrid.AlingToCenter(new Vector3(mousePos.x,mousePos.y,0));
+        itemGrid.AlignToCenter(new Vector3(mousePos.x,mousePos.y,0));
         transform.position = new Vector3(mousePos.x,mousePos.y,0);
     }
 

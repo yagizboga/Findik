@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      GOLDANDCOPPERSWORD_0: 5816570841095076376
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
