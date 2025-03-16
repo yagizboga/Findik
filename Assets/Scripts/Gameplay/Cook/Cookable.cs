@@ -23,7 +23,6 @@ public class Cookable : IngredientTypes
 
     private float proximityThreshold = 0.25f;
 
-
     public static GameObject instance;
 
     private bool inRange = false;
@@ -43,12 +42,10 @@ public class Cookable : IngredientTypes
             if (cookTimer >= cookTime && cookTimer < burnTime && !isCooked)
             {
                 isCooked = true;
-                Debug.Log("PÝÞTÝ");
                 spriteRenderer.color = cookedColor;
             }
             else if(cookTimer >= burnTime && isCooked)
             {
-                Debug.Log("YANDI MAL");
                 isCooking = false;
                 isCooked = false;
                 spriteRenderer.color = burnedColor;
@@ -86,14 +83,11 @@ public class Cookable : IngredientTypes
                     instance = gameObject;
                 }
             }
-
-
             if (isDragging)
             {
                 transform.position = worldPos;
             }
         }
-
         else if (Gamepad.current != null)  
         {
             Vector2 controllerInput = Gamepad.current.leftStick.ReadValue();
@@ -104,11 +98,6 @@ public class Cookable : IngredientTypes
             {
                 transform.position += new Vector3(controllerInput.x, controllerInput.y, 0) * Time.deltaTime * 5f;  
             }
-        }
-        else
-        {
-            
-             
         }
     }
 
@@ -129,7 +118,7 @@ public class Cookable : IngredientTypes
         if (context.canceled && isDragging && !isDragBlocked)
         {
             isDragging = false;
-            ingredientHolder.SetIsGrillMatching(false);
+            //ingredientHolder.SetIsGrillMatching(false);
             ingredientHolder.DropIngredient(gameObject);
         }
     }
@@ -150,9 +139,5 @@ public class Cookable : IngredientTypes
     {
         cookTimer = 0f; 
     }
-
-
-
-
 }
     

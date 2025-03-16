@@ -15,22 +15,22 @@ public class IngredientHolder : IngredientTypes
 
     private bool isOvenMatching = false;
     private bool isGrillMatching = false;
+    private bool isBinMatching = false;
 
-    //public GameObject meatHolder;
     public GameObject[] meatCookPlace;
     public GameObject[] breadCookPlace;
-    //private bool[] isMeatPlaceEmpty;
 
     public GameObject cookableMeat;
     public GameObject cookableBread;
 
-    private void Start()
+    private void Update()
     {
-       /* isMeatPlaceEmpty = new bool[meatHolder.transform.childCount];
-        for(int i = 0; i < isMeatPlaceEmpty.Length; i++)
+        if (canDrag && currentIngredient != null)
         {
-            isMeatPlaceEmpty[i] = false;
-        }*/
+            Vector2 pointerPos = Pointer.current.position.ReadValue();
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(pointerPos.x, pointerPos.y, 10));
+            currentIngredient.transform.position = worldPos;
+        }
     }
 
     public void SetCanSpawn(bool canSpawnStatus, IngredientType ingredientType)
@@ -72,17 +72,7 @@ public class IngredientHolder : IngredientTypes
             DropIngredient();
         }
     }
-
-    private void Update()
-    {
-        if (canDrag && currentIngredient != null)
-        {
-            Vector2 pointerPos = Pointer.current.position.ReadValue(); 
-            Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(pointerPos.x, pointerPos.y, 10));
-            currentIngredient.transform.position = worldPos;
-        }
-        //Debug.Log(isGrillMatching);
-    }
+    
 
     void SpawnIngredient()
     {
@@ -160,6 +150,10 @@ public class IngredientHolder : IngredientTypes
                 }
             }
         }
+        else if (isBinMatching)
+        {
+            Destroy(ingredient);
+        }
         else
         {
             if (ingredient == currentIngredient)
@@ -171,9 +165,7 @@ public class IngredientHolder : IngredientTypes
                 ingredient.transform.localPosition = Vector3.zero;
                 //Debug.Log("ZEROED");
             }
-            
         }
-        
     }
 
     public void SetIsMatching(bool match)
@@ -201,4 +193,12 @@ public class IngredientHolder : IngredientTypes
         else if (ismatch == false)
             isOvenMatching = ismatch;
     }
+    public void SetIsBinMatching(bool ismatch)
+    {
+        if (ismatch == true)
+            isBinMatching = ismatch;
+        else if (ismatch == false)
+            isBinMatching = ismatch;
+    }
+
 }
