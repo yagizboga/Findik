@@ -182,6 +182,20 @@ public class Grid{
         return true;
     }
 
+    public bool isGridFull(Grid grid){
+        for(int x=0;x<width;x++){
+            for(int y=0;y<height;y++){
+                Debug.Log(grid.GetCellValue((int)grid.GetWorldToGridPosition(new Vector3(valueText[x,y].transform.position.x,valueText[x,y].transform.position.y,0)).x,
+                                    (int)grid.GetWorldToGridPosition(new Vector3(valueText[x,y].transform.position.x,valueText[x,y].transform.position.y,0)).y));
+                if(grid.GetCellValue((int)grid.GetWorldToGridPosition(new Vector3(valueText[x,y].transform.position.x,valueText[x,y].transform.position.y,0)).x,
+                                    (int)grid.GetWorldToGridPosition(new Vector3(valueText[x,y].transform.position.x,valueText[x,y].transform.position.y,0)).y) == 1){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public Vector2 GetCellWorldPositions(int x,int y){
             return valueText[x,y].transform.position;
     }
@@ -220,6 +234,20 @@ public class Grid{
                 valueText[x,y].transform.position = temp[x,y];
             }
         }
+    }
+
+    public Vector2 AlignToValueText(GameObject obj){
+        float xAvg=0,yAvg=0;
+
+        for(int x=0;x<width;x++){
+            xAvg += valueText[x,0].transform.position.x;
+        }
+        for(int y=0;y<height;y++){
+            yAvg += valueText[0,y].transform.position.y;
+        }
+        xAvg = xAvg/width;
+        yAvg = yAvg/height;
+        return new Vector2(xAvg,yAvg);
     }
 
 

@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using Unity.VisualScripting;
+using UnityEngine.EventSystems;
 
 public class ShelfItem : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class ShelfItem : MonoBehaviour
     List<Vector2> lastCells;
     Vector2 lastCell;
     GameObject sprite;
+    Vector3 mousePosStart;
 
     void Awake(){
         lastCells = new List<Vector2>();
@@ -39,13 +41,16 @@ public class ShelfItem : MonoBehaviour
             }
         }
         itemGrid.ToItem(); 
+        sprite.gameObject.transform.localPosition = itemGrid.AlignToValueText(sprite.gameObject);
     }
 
     void Start(){
         shelfGrid = transform.parent.GetComponent<ShelfUI>().GetShelfGrid();
+        mousePosStart = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
     void Update(){
+        sprite.gameObject.transform.position = itemGrid.AlignToValueText(sprite.gameObject);
         if(shelfGrid == null){
             shelfGrid = transform.parent.GetComponent<ShelfUI>().GetShelfGrid();
         }
@@ -55,9 +60,10 @@ public class ShelfItem : MonoBehaviour
 
     public void SetTransformToMouse(){
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        itemGrid.UpdateGridPosition(transform.position);
-        itemGrid.AlignToCenter(new Vector3(mousePos.x,mousePos.y,0));
-        transform.position = new Vector3(mousePos.x,mousePos.y,0);
+        //itemGrid.UpdateGridPosition(transform.position);
+        //itemGrid.AlignToCenter(new Vector3(mousePos.x,mousePos.y,0));
+        //transform.position = new Vector3(mousePos.x,mousePos.y,0);
+        gameObject.transform.position = mousePos - new Vector3(itemGrid.GetSize().x /2f,itemGrid.GetSize().y /2f,0);
     }
 
     public Grid GetItemGrid(){

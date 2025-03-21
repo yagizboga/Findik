@@ -26,7 +26,7 @@ public class ShelfUI : MonoBehaviour
     }
 
     void Start(){
-        NewItem(ItemScriptableObject.shelfItemType.GOLDANDCOPPERSWORD);
+        NewItem(ItemScriptableObject.shelfItemType.key);
         NewItem(ItemScriptableObject.shelfItemType.UGLYRIPPEDOFFTOYHEAD);
         //NewItem(ItemScriptableObject.shelfItemType.book);
     }
@@ -34,13 +34,12 @@ public class ShelfUI : MonoBehaviour
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(mousePos,new Vector3(0,0,1),100f);
         if(hit.collider != null){
-            Debug.Log(hit.collider.gameObject);
-            if(hit.collider.CompareTag("itemCell")){
+            //Debug.Log(hit.collider.gameObject);
+            if(hit.collider.CompareTag("itemCell") && !isDragging){
                 currentItem = hit.collider.gameObject.transform.parent.transform.parent.gameObject;
+                //Debug.Log(currentItem.gameObject);
             }
-            else{
-                currentItem = null;
-            }
+            else if(!isDragging){currentItem = null;}
         }
         if(isDragging && currentItem != null){
             currentItem.GetComponent<ShelfItem>().SetTransformToMouse();
@@ -58,12 +57,14 @@ public class ShelfUI : MonoBehaviour
             isDragging = false;
             if(currentItem != null && currentItem.GetComponent<ShelfItem>().GetItemGrid().isOnGrid(shelfGrid)){
                 currentItem.GetComponent<ShelfItem>().GetItemGrid().SetGridPosToGrid(shelfGrid);
+                currentItem = null;
                 
             }
-            else if(currentItem != null && !currentItem.GetComponent<ShelfItem>().GetItemGrid().isOnGrid(shelfGrid)){
+            else if(currentItem != null && (!currentItem.GetComponent<ShelfItem>().GetItemGrid().isOnGrid(shelfGrid) || currentItem.GetComponent<ShelfItem>().GetItemGrid().isGridFull(shelfGrid))){
                 
                 currentItem.transform.position = new Vector3(oldPosition.x,oldPosition.y,0);
                 oldPosition = new Vector2();
+                currentItem = null;
             }
         }
     }  
