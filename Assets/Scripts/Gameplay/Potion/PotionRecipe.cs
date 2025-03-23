@@ -14,6 +14,11 @@ public class PotionRecipe : PotionIngredientTypes
 
     private GameObject currentIngredient;
     private PotionIngredient potion;
+
+    private bool didSpoon = false;
+    private bool didWarm = false;
+
+    public Spoon spoon;
     private void Start()
     {
         InitializeRequiredCounts();
@@ -65,6 +70,8 @@ public class PotionRecipe : PotionIngredientTypes
             if (addedCounts[type] < requiredCounts[type])
                 return false;
         }
+        if (!didSpoon)
+            return false;
         return true;
     }
 
@@ -79,13 +86,8 @@ public class PotionRecipe : PotionIngredientTypes
         {
             addedCounts[ingredientType]++;
             Destroy(ingredient);
-
-            if (IsRecipeComplete()) 
-            {
-                isPotionReady = true;
-                Debug.Log("POTION IS READY!'");
-               // ResetRecipe(); /
-            }
+            spoon.ResetMix();
+            CheckStatus();
         }
         else
         {
@@ -97,5 +99,25 @@ public class PotionRecipe : PotionIngredientTypes
     {
         InitializeRequiredCounts();
         isPotionReady = false;
+    }
+
+    public void SetDidSpoon(bool spoon)
+    {
+        didSpoon = spoon;
+    }
+
+    public void SetDidWarm(bool warm)
+    {
+        didWarm = warm;
+    }
+
+    public void CheckStatus()
+    {
+        if (IsRecipeComplete())
+        {
+            isPotionReady = true;
+            Debug.Log("POTION IS READY!'");
+            // ResetRecipe(); /
+        }
     }
 }
