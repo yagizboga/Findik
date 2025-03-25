@@ -1,4 +1,5 @@
     using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Spoon : MonoBehaviour
 {
@@ -29,19 +30,10 @@ public class Spoon : MonoBehaviour
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mouseWorldPos.z = 0f;
 
-        if (canSpoon && Input.GetMouseButtonDown(0))
-        {
-            isDragging = true;
-        }
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            isDragging = false;
-        }
 
         if (isDragging)
         {
-            float mouseXMovement = Input.GetAxis("Mouse X") * moveSpeed * Time.deltaTime;
+            float mouseXMovement = Input.GetAxis("Mouse X") * moveSpeed * Time.deltaTime;  // NO CONTROLLERR SUPPORT FOR NOW !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             float newX = Mathf.Clamp(transform.position.x + mouseXMovement, minX, maxX);
 
             if (newX != transform.position.x)
@@ -76,6 +68,20 @@ public class Spoon : MonoBehaviour
     private void OnMouseExit()
     {
         canSpoon = false;
+    }
+
+    public void DragSpoon(InputAction.CallbackContext context)
+    {
+        if (context.performed && canSpoon)
+        {
+            isDragging = true;
+            Cursor.visible = false;
+        }
+        else if (context.canceled)
+        {
+            isDragging = false;
+            Cursor.visible = true;
+        }
     }
 
 }

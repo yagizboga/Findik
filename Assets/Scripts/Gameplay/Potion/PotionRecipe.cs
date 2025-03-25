@@ -72,6 +72,8 @@ public class PotionRecipe : PotionIngredientTypes
         }
         if (!didSpoon)
             return false;
+        if (!didWarm)
+            return false;
         return true;
     }
 
