@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using TMPro; 
+using UnityEngine.UI; 
 
 public class PotionRecipe : PotionIngredientTypes
 {
@@ -19,9 +21,17 @@ public class PotionRecipe : PotionIngredientTypes
     private bool didWarm = false;
 
     public Spoon spoon;
+
+    public TMP_Text[] ingredientTexts; 
+    private Dictionary<PotionIngredientType, TMP_Text> ingredientTextMap = new Dictionary<PotionIngredientType, TMP_Text>();
+
+    public TMP_Text spoonText;
+    public TMP_Text warmText;
+
     private void Start()
     {
         InitializeRequiredCounts();
+        InitializeIngredientTextMap();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -89,6 +99,7 @@ public class PotionRecipe : PotionIngredientTypes
             addedCounts[ingredientType]++;
             Destroy(ingredient);
             spoon.ResetMix();
+            UpdateIngredientTextUI(ingredientType);
             CheckStatus();
         }
         else
@@ -106,11 +117,19 @@ public class PotionRecipe : PotionIngredientTypes
     public void SetDidSpoon(bool spoon)
     {
         didSpoon = spoon;
+        foreach (var type in requiredCounts.Keys)
+        {
+            if (addedCounts[type] >= requiredCounts[type])
+            {
+                UpdateSpoonTextUI();
+            }
+        }
     }
 
     public void SetDidWarm(bool warm)
     {
         didWarm = warm;
+        UpdateWarmTextUI();
     }
 
     public void CheckStatus()
@@ -122,4 +141,45 @@ public class PotionRecipe : PotionIngredientTypes
             // ResetRecipe(); /
         }
     }
+
+    private void InitializeIngredientTextMap()
+    {
+        ingredientTextMap.Clear();
+
+        for (int i = 0; i < requiredTypes.Length && i < ingredientTexts.Length; i++)
+        {
+            ingredientTextMap[requiredTypes[i]] = ingredientTexts[i];
+        }
+    }
+    private void UpdateIngredientTextUI(PotionIngredientType ingredientType)
+    {
+        if (ingredientTextMap.ContainsKey(ingredientType))
+        {
+            TMP_Text text = ingredientTextMap[ingredientType];
+            Color color = text.color;
+            color.a = 0.5f; 
+            text.color = color;
+        }
+    }
+
+    private void UpdateSpoonTextUI()
+    {
+        if (spoonText != null && didSpoon)
+        {
+            Color color = spoonText.color;
+            color.a = 0.5f;
+            spoonText.color = color;
+        }
+    }
+
+    private void UpdateWarmTextUI()
+    {
+        if (warmText != null && didWarm)
+        {
+            Color color = warmText.color;
+            color.a = 0.5f;
+            warmText.color = color;
+        }
+    }
+
 }

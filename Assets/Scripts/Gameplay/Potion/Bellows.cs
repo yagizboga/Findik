@@ -88,6 +88,7 @@ public class Bellows : MonoBehaviour
         {
             isDragging = false;
             Cursor.visible = true;
+            warmParticle.Stop();
         }
     }
 }
