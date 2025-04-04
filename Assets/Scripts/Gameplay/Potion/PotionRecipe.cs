@@ -90,10 +90,10 @@ public class PotionRecipe : PotionIngredientTypes
             if (addedCounts[type] < requiredCounts[type])
                 return false;
         }
-        if (!didSpoon)
+        /*if (!didSpoon)
             return false;
         if (!didWarm)
-            return false;
+            return false;*/
         return true;
     }
 
@@ -113,7 +113,7 @@ public class PotionRecipe : PotionIngredientTypes
         {
             addedCounts[ingredientType]++;
             Destroy(ingredient);
-            spoon.ResetMix();
+            //spoon.ResetMix();
             UpdateIngredientTextUI(ingredientType);
             currentIngredientIndex++;
             CheckStatus();
@@ -137,7 +137,7 @@ public class PotionRecipe : PotionIngredientTypes
 
                 addedCounts[ingredientType]++;
                 Destroy(ingredient);
-                spoon.ResetMix();
+                //spoon.ResetMix();
                 UpdateIngredientTextUI(ingredientType);
                 currentIngredientIndex = futureIndex + 1;
                 CheckStatus();
@@ -165,28 +165,80 @@ public class PotionRecipe : PotionIngredientTypes
         isPotionReady = false;
     }
 
-    public void SetDidSpoon(bool spoon)
+    public void SetDidSpoon()
     {
-        didSpoon = spoon;
-        foreach (var type in requiredCounts.Keys)
+        if (currentIngredientIndex >= requiredTypes.Length || ingredientLocked[currentIngredientIndex])
         {
-            if (addedCounts[type] < requiredCounts[type])
-                return;
+            potionQuality--;
         }
-        foreach (var type in requiredCounts.Keys)
+        else if (requiredTypes[currentIngredientIndex] == PotionIngredientType.Spoon)
         {
-            if (addedCounts[type] >= requiredCounts[type])
+            addedCounts[PotionIngredientType.Spoon]++;
+            UpdateIngredientTextUI(PotionIngredientType.Spoon);
+            currentIngredientIndex++;
+            CheckStatus();
+        }
+        else
+        {
+            int futureIndex = System.Array.IndexOf(requiredTypes, PotionIngredientType.Spoon);
+            if (futureIndex > currentIngredientIndex)
             {
-                UpdateSpoonTextUI();
+                int skippedCount = futureIndex - currentIngredientIndex;
+                potionQuality -= skippedCount;
+                potionQuality = Mathf.Max(potionQuality, 0);
+
+                for (int i = currentIngredientIndex; i < futureIndex; i++)
+                {
+                    ingredientLocked[i] = true;
+                    addedCounts[requiredTypes[i]]++;
+                    UpdateIngredientTextToRed(requiredTypes[i]);
+                }
+
+                addedCounts[PotionIngredientType.Spoon]++;
+                UpdateIngredientTextUI(PotionIngredientType.Spoon);
+                currentIngredientIndex = futureIndex + 1;
+                CheckStatus();
             }
         }
     }
 
-    public void SetDidWarm(bool warm)
+    public void SetDidWarm()
     {
-        didWarm = warm;
-        UpdateWarmTextUI();
+        if (currentIngredientIndex >= requiredTypes.Length || ingredientLocked[currentIngredientIndex])
+        {
+            potionQuality--;
+        }
+        else if (requiredTypes[currentIngredientIndex] == PotionIngredientType.Warm)
+        {
+            addedCounts[PotionIngredientType.Warm]++;
+            UpdateIngredientTextUI(PotionIngredientType.Warm);
+            currentIngredientIndex++;
+            CheckStatus();
+        }
+        else
+        {
+            int futureIndex = System.Array.IndexOf(requiredTypes, PotionIngredientType.Warm);
+            if (futureIndex > currentIngredientIndex)
+            {
+                int skippedCount = futureIndex - currentIngredientIndex;
+                potionQuality -= skippedCount;
+                potionQuality = Mathf.Max(potionQuality, 0);
+
+                for (int i = currentIngredientIndex; i < futureIndex; i++)
+                {
+                    ingredientLocked[i] = true;
+                    addedCounts[requiredTypes[i]]++;
+                    UpdateIngredientTextToRed(requiredTypes[i]);
+                }
+
+                addedCounts[PotionIngredientType.Warm]++;
+                UpdateIngredientTextUI(PotionIngredientType.Warm);
+                currentIngredientIndex = futureIndex + 1;
+                CheckStatus();
+            }
+        }
     }
+
 
     public void CheckStatus()
     {

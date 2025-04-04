@@ -54,7 +54,7 @@ public class Bellows : MonoBehaviour
             if (warmingAmount >= targetWarm)
             {
                 Debug.Log("Warm Done");
-                recipe.SetDidWarm(true);
+                recipe.SetDidWarm();
                 recipe.CheckStatus();
                 ResetWarm();
             }

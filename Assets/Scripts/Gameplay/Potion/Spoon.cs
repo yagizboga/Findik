@@ -48,7 +48,7 @@ public class Spoon : MonoBehaviour
             {
                 Debug.Log("Mix Done");
                 mixAmount = 0f;
-                recipe.SetDidSpoon(true);
+                recipe.SetDidSpoon();
                 recipe.CheckStatus();
             }
         }
@@ -57,7 +57,7 @@ public class Spoon : MonoBehaviour
     public void ResetMix()
     {
         mixAmount = 0f;
-        recipe.SetDidSpoon(false);
+        recipe.SetDidSpoon();
     }
 
     private void OnMouseEnter()

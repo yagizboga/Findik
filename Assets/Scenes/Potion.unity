@@ -9210,7 +9210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90dee41338a01c548baae4b288988fb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredTypes: 010000000200000003000000000000000400000005000000
+  requiredTypes: 0100000002000000030000000000000004000000050000000700000006000000
   spoon: {fileID: 832367887}
   ingredientTexts:
   - {fileID: 540563164}
@@ -9219,6 +9219,8 @@ MonoBehaviour:
   - {fileID: 1495442431}
   - {fileID: 1649567177}
   - {fileID: 1204204428}
+  - {fileID: 2006942926}
+  - {fileID: 989862243}
   spoonText: {fileID: 989862243}
   warmText: {fileID: 2006942926}
 --- !u!1 &768272274
@@ -10744,8 +10746,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4279566590
-  m_fontColor: {r: 0.9960785, g: 0, b: 0.08235294, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -15543,8 +15545,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4279369983
-  m_fontColor: {r: 1, g: 0, b: 0.06987047, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
