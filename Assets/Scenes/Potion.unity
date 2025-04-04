@@ -9210,15 +9210,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90dee41338a01c548baae4b288988fb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredTypes: 010000000200000003000000040000000500000000000000
+  requiredTypes: 010000000200000003000000000000000400000005000000
   spoon: {fileID: 832367887}
   ingredientTexts:
   - {fileID: 540563164}
   - {fileID: 1113180341}
   - {fileID: 1376843251}
+  - {fileID: 1495442431}
   - {fileID: 1649567177}
   - {fileID: 1204204428}
-  - {fileID: 1495442431}
   spoonText: {fileID: 989862243}
   warmText: {fileID: 2006942926}
 --- !u!1 &768272274

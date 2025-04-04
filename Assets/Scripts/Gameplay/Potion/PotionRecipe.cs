@@ -28,10 +28,20 @@ public class PotionRecipe : PotionIngredientTypes
     public TMP_Text spoonText;
     public TMP_Text warmText;
 
+    private int currentIngredientIndex = 0;
+    private int potionQuality = 5;
+    private bool[] ingredientLocked;
+
     private void Start()
     {
         InitializeRequiredCounts();
         InitializeIngredientTextMap();
+        ingredientLocked = new bool[requiredTypes.Length];
+    }
+
+    private void FixedUpdate()
+    {
+        //Debug.Log(potionQuality);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -94,19 +104,60 @@ public class PotionRecipe : PotionIngredientTypes
 
         PotionIngredientType ingredientType = potionComponent.type;
 
-        if (requiredCounts.ContainsKey(ingredientType) && addedCounts[ingredientType] < requiredCounts[ingredientType])
+        if (currentIngredientIndex >= requiredTypes.Length || ingredientLocked[currentIngredientIndex])
+        {
+            potionQuality--;
+            ingredient.transform.localPosition = Vector3.zero;
+        }
+        else if (ingredientType == requiredTypes[currentIngredientIndex])
         {
             addedCounts[ingredientType]++;
             Destroy(ingredient);
             spoon.ResetMix();
             UpdateIngredientTextUI(ingredientType);
+            currentIngredientIndex++;
             CheckStatus();
         }
         else
         {
-            ingredient.transform.localPosition = Vector3.zero;
+            int futureIndex = System.Array.IndexOf(requiredTypes, ingredientType);
+            if (futureIndex > currentIngredientIndex)
+            {
+                int skippedCount = futureIndex - currentIngredientIndex; 
+                potionQuality -= skippedCount;
+                potionQuality = Mathf.Max(potionQuality, 0); 
+                Debug.Log($"Wrong ingredient! Skipped {skippedCount} steps. PotionQuality: {potionQuality}");
+
+                for (int i = currentIngredientIndex; i < futureIndex; i++)
+                {
+                    ingredientLocked[i] = true;
+                    addedCounts[requiredTypes[i]]++;
+                    UpdateIngredientTextToRed(requiredTypes[i]);
+                }
+
+                addedCounts[ingredientType]++;
+                Destroy(ingredient);
+                spoon.ResetMix();
+                UpdateIngredientTextUI(ingredientType);
+                currentIngredientIndex = futureIndex + 1;
+                CheckStatus();
+            }
+            else
+            {
+                ingredient.transform.localPosition = Vector3.zero;
+            }
         }
     }
+
+
+    private void UpdateIngredientTextToRed(PotionIngredientType ingredientType)
+{
+    if (ingredientTextMap.ContainsKey(ingredientType))
+    {
+        TMP_Text text = ingredientTextMap[ingredientType];
+        text.color = new Color(1, 0, 0, 0.5f);
+    }
+}
 
     private void ResetRecipe()
     {
@@ -117,6 +168,11 @@ public class PotionRecipe : PotionIngredientTypes
     public void SetDidSpoon(bool spoon)
     {
         didSpoon = spoon;
+        foreach (var type in requiredCounts.Keys)
+        {
+            if (addedCounts[type] < requiredCounts[type])
+                return;
+        }
         foreach (var type in requiredCounts.Keys)
         {
             if (addedCounts[type] >= requiredCounts[type])
