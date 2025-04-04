@@ -31,12 +31,14 @@ public class PotionRecipe : PotionIngredientTypes
     private int currentIngredientIndex = 0;
     private int potionQuality = 5;
     private bool[] ingredientLocked;
+    public TMP_Text potionQualityText;
 
     private void Start()
     {
         InitializeRequiredCounts();
         InitializeIngredientTextMap();
         ingredientLocked = new bool[requiredTypes.Length];
+        UpdatePotionQualityUI();
     }
 
     private void FixedUpdate()
@@ -106,7 +108,15 @@ public class PotionRecipe : PotionIngredientTypes
 
         if (currentIngredientIndex >= requiredTypes.Length || ingredientLocked[currentIngredientIndex])
         {
-            potionQuality--;
+            if (potionQuality > 0)
+            {
+                potionQuality--;
+            }
+            else
+            {
+                potionQuality = 0;
+            }
+            UpdatePotionQualityUI();
             ingredient.transform.localPosition = Vector3.zero;
         }
         else if (ingredientType == requiredTypes[currentIngredientIndex])
@@ -125,7 +135,8 @@ public class PotionRecipe : PotionIngredientTypes
             {
                 int skippedCount = futureIndex - currentIngredientIndex; 
                 potionQuality -= skippedCount;
-                potionQuality = Mathf.Max(potionQuality, 0); 
+                potionQuality = Mathf.Max(potionQuality, 0);
+                UpdatePotionQualityUI();
                 Debug.Log($"Wrong ingredient! Skipped {skippedCount} steps. PotionQuality: {potionQuality}");
 
                 for (int i = currentIngredientIndex; i < futureIndex; i++)
@@ -144,7 +155,25 @@ public class PotionRecipe : PotionIngredientTypes
             }
             else
             {
-                ingredient.transform.localPosition = Vector3.zero;
+                if (ingredientType == PotionIngredientType.Spoon || ingredientType == PotionIngredientType.Warm)
+                {
+                    if (potionQuality > 0)
+                    {
+                        potionQuality--;
+                    }
+                    UpdatePotionQualityUI();
+                    Debug.Log($"Wrong ingredient! PotionQuality: {potionQuality}");
+                }
+                else
+                {
+                    if (potionQuality > 0)
+                    {
+                        potionQuality--;
+                    }
+                    UpdatePotionQualityUI();
+                    Debug.Log($"Wrong ingredient! PotionQuality: {potionQuality}");
+                    Destroy(ingredient);
+                }
             }
         }
     }
@@ -169,7 +198,16 @@ public class PotionRecipe : PotionIngredientTypes
     {
         if (currentIngredientIndex >= requiredTypes.Length || ingredientLocked[currentIngredientIndex])
         {
-            potionQuality--;
+            if (potionQuality > 0)
+            {
+                potionQuality--;
+            }
+            else
+            {
+                potionQuality = 0;
+            }
+            Debug.Log($"Wrong ingredient! PotionQuality: {potionQuality}");
+            UpdatePotionQualityUI();
         }
         else if (requiredTypes[currentIngredientIndex] == PotionIngredientType.Spoon)
         {
@@ -180,25 +218,16 @@ public class PotionRecipe : PotionIngredientTypes
         }
         else
         {
-            int futureIndex = System.Array.IndexOf(requiredTypes, PotionIngredientType.Spoon);
-            if (futureIndex > currentIngredientIndex)
+            if (potionQuality > 0)
             {
-                int skippedCount = futureIndex - currentIngredientIndex;
-                potionQuality -= skippedCount;
-                potionQuality = Mathf.Max(potionQuality, 0);
-
-                for (int i = currentIngredientIndex; i < futureIndex; i++)
-                {
-                    ingredientLocked[i] = true;
-                    addedCounts[requiredTypes[i]]++;
-                    UpdateIngredientTextToRed(requiredTypes[i]);
-                }
-
-                addedCounts[PotionIngredientType.Spoon]++;
-                UpdateIngredientTextUI(PotionIngredientType.Spoon);
-                currentIngredientIndex = futureIndex + 1;
-                CheckStatus();
+                potionQuality--;
             }
+            else
+            {
+                potionQuality = 0;
+            }
+            Debug.Log($"Wrong ingredient! PotionQuality: {potionQuality}");
+            UpdatePotionQualityUI();
         }
     }
 
@@ -206,7 +235,16 @@ public class PotionRecipe : PotionIngredientTypes
     {
         if (currentIngredientIndex >= requiredTypes.Length || ingredientLocked[currentIngredientIndex])
         {
-            potionQuality--;
+            if (potionQuality > 0)
+            {
+                potionQuality--;
+            }
+            else
+            {
+                potionQuality = 0;
+            }
+            Debug.Log($"Wrong ingredient! PotionQuality: {potionQuality}");
+            UpdatePotionQualityUI();
         }
         else if (requiredTypes[currentIngredientIndex] == PotionIngredientType.Warm)
         {
@@ -217,25 +255,16 @@ public class PotionRecipe : PotionIngredientTypes
         }
         else
         {
-            int futureIndex = System.Array.IndexOf(requiredTypes, PotionIngredientType.Warm);
-            if (futureIndex > currentIngredientIndex)
+            if (potionQuality > 0)
             {
-                int skippedCount = futureIndex - currentIngredientIndex;
-                potionQuality -= skippedCount;
-                potionQuality = Mathf.Max(potionQuality, 0);
-
-                for (int i = currentIngredientIndex; i < futureIndex; i++)
-                {
-                    ingredientLocked[i] = true;
-                    addedCounts[requiredTypes[i]]++;
-                    UpdateIngredientTextToRed(requiredTypes[i]);
-                }
-
-                addedCounts[PotionIngredientType.Warm]++;
-                UpdateIngredientTextUI(PotionIngredientType.Warm);
-                currentIngredientIndex = futureIndex + 1;
-                CheckStatus();
+                potionQuality--;
             }
+            else
+            {
+                potionQuality = 0;
+            }
+            Debug.Log($"Wrong ingredient! PotionQuality: {potionQuality}");
+            UpdatePotionQualityUI();
         }
     }
 
@@ -290,4 +319,12 @@ public class PotionRecipe : PotionIngredientTypes
         }
     }
 
+    private void UpdatePotionQualityUI()
+    {
+        potionQuality = Mathf.Max(potionQuality, 0);
+        if (potionQualityText != null)
+        {
+            potionQualityText.text = $"Potion Quality: {potionQuality}";
+        }
+    }
 }
