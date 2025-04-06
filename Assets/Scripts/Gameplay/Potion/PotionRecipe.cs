@@ -29,9 +29,15 @@ public class PotionRecipe : PotionIngredientTypes
     public TMP_Text warmText;
 
     private int currentIngredientIndex = 0;
-    private int potionQuality = 5;
+    private int potionQuality;
+    private int initialQuality = 5;
     private bool[] ingredientLocked;
     public TMP_Text potionQualityText;
+
+    private Color originalSpoonColor;
+    private Color originalWarmColor;
+
+    private Dictionary<PotionIngredientType, Color> originalTextColors = new Dictionary<PotionIngredientType, Color>();
 
     private void Start()
     {
@@ -39,6 +45,14 @@ public class PotionRecipe : PotionIngredientTypes
         InitializeIngredientTextMap();
         ingredientLocked = new bool[requiredTypes.Length];
         UpdatePotionQualityUI();
+
+        if (spoonText != null)
+            originalSpoonColor = spoonText.color;
+
+        if (warmText != null)
+            originalWarmColor = warmText.color;
+
+        potionQuality = initialQuality;
     }
 
     private void FixedUpdate()
@@ -188,10 +202,61 @@ public class PotionRecipe : PotionIngredientTypes
     }
 }
 
-    private void ResetRecipe()
+    public void ResetRecipe()
     {
         InitializeRequiredCounts();
         isPotionReady = false;
+        currentIngredientIndex = 0;
+
+        for (int i = 0; i < ingredientLocked.Length; i++)
+        {
+            ingredientLocked[i] = false;
+        }
+
+        foreach (var kvp in ingredientTextMap)
+        {
+            PotionIngredientType type = kvp.Key;
+            TMP_Text text = kvp.Value;
+
+            if (originalTextColors.ContainsKey(type))
+                text.color = originalTextColors[type];
+        }
+
+        if (spoonText != null)
+            spoonText.color = originalSpoonColor;
+
+        if (warmText != null)
+            warmText.color = originalWarmColor;
+
+        didSpoon = false;
+        didWarm = false;
+
+        potionQuality = initialQuality;
+        UpdatePotionQualityUI();
+    }
+
+    public void ClaimPotion()
+    {
+        int missingCount = 0;
+
+        foreach (var type in requiredCounts.Keys)
+        {
+            int required = requiredCounts[type];
+            int added = addedCounts.ContainsKey(type) ? addedCounts[type] : 0;
+
+            if (added < required)
+            {
+                missingCount += required - added;
+            }
+        }
+
+        potionQuality -= missingCount;
+        potionQuality = Mathf.Max(potionQuality, 0);
+
+        Debug.Log($"Potion is claimed with quality: {potionQuality} (Missing {missingCount} ingredients)");
+        potionQuality = initialQuality;
+        ResetRecipe();
+        UpdatePotionQualityUI();
     }
 
     public void SetDidSpoon()
@@ -282,10 +347,12 @@ public class PotionRecipe : PotionIngredientTypes
     private void InitializeIngredientTextMap()
     {
         ingredientTextMap.Clear();
+        originalTextColors.Clear(); 
 
         for (int i = 0; i < requiredTypes.Length && i < ingredientTexts.Length; i++)
         {
             ingredientTextMap[requiredTypes[i]] = ingredientTexts[i];
+            originalTextColors[requiredTypes[i]] = ingredientTexts[i].color; 
         }
     }
     private void UpdateIngredientTextUI(PotionIngredientType ingredientType)
@@ -299,7 +366,7 @@ public class PotionRecipe : PotionIngredientTypes
         }
     }
 
-    private void UpdateSpoonTextUI()
+    /*private void UpdateSpoonTextUI()
     {
         if (spoonText != null && didSpoon)
         {
@@ -307,9 +374,9 @@ public class PotionRecipe : PotionIngredientTypes
             color.a = 0.5f;
             spoonText.color = color;
         }
-    }
+    }*/
 
-    private void UpdateWarmTextUI()
+    /*private void UpdateWarmTextUI()
     {
         if (warmText != null && didWarm)
         {
@@ -317,7 +384,7 @@ public class PotionRecipe : PotionIngredientTypes
             color.a = 0.5f;
             warmText.color = color;
         }
-    }
+    }*/
 
     private void UpdatePotionQualityUI()
     {
