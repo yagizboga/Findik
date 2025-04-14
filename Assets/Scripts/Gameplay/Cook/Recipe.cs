@@ -54,7 +54,7 @@ public class Recipe : MonoBehaviour
         /////////////////////////////////////////////////
         
 
-        StartCoroutine(CloseTheTable());
+        //StartCoroutine(CloseTheTable()); // close the tab at the end
     }
 
     private IEnumerator CloseTheTable()
