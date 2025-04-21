@@ -25,6 +25,9 @@ public class Cookable : IngredientTypes
 
     public static GameObject instance;
 
+    private Transform originalParent;
+
+
     private bool inRange = false;
 
     private void Start()
@@ -111,6 +114,11 @@ public class Cookable : IngredientTypes
         if (context.performed && canDrag && !isDragBlocked && instance == gameObject)
         {
             isDragging = true;
+
+            if (originalParent == null)
+                originalParent = transform.parent;
+
+            transform.SetParent(null);
         }
     }
     public void ReleaseIngredientInput(InputAction.CallbackContext context)
@@ -119,7 +127,14 @@ public class Cookable : IngredientTypes
         {
             isDragging = false;
             //ingredientHolder.SetIsGrillMatching(false);
+
+            if (originalParent != null)
+            {
+                transform.SetParent(originalParent);
+            }
             ingredientHolder.DropIngredient(gameObject);
+            transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+
         }
     }
 
