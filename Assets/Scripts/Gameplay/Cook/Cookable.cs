@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class Cookable : IngredientTypes
 {
     public bool isCooked = false;
-    private bool isCooking = true;
+    public bool isCooking = true;
     private bool isDragging = false;
     public bool canDrag = false;
     public bool isDragBlocked = false;
