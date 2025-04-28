@@ -23,6 +23,8 @@ public class IngredientHolder : IngredientTypes
     public GameObject cookableMeat;
     public GameObject cookableBread;
 
+    public Transform ovenTransform;
+
     private void Update()
     {
         if (canDrag && currentIngredient != null)
@@ -131,24 +133,10 @@ public class IngredientHolder : IngredientTypes
         {
             //Debug.Log("DROPPED after Grill Match!");
             isOvenMatching = false;
-            Oven oven = highlightedTrigger.GetComponent<Oven>();
-            oven.SetIsDropped(true);
-            Destroy(ingredient);
-            highlightedTrigger = null;
-            isOvenMatching = false;
-            oven = null;
-            isMatching = false;
-
-            for (int i = 0; i < breadCookPlace.Length; i++)
-            {
-                if (breadCookPlace[i].transform.childCount == 0)
-                {
-                    isOvenMatching = false;
-                    GameObject inst = Instantiate(cookableBread, breadCookPlace[i].transform);
-                    inst.transform.localPosition = Vector3.zero;
-                    break;
-                }
-            }
+            Animator breadAnimator = ingredient.GetComponent<Animator>();
+            ingredient.transform.SetParent(ovenTransform);
+            breadAnimator.SetBool("isDropped", true);
+            //DropBread(ingredient);
         }
         else if (isBinMatching)
         {
@@ -200,6 +188,38 @@ public class IngredientHolder : IngredientTypes
             isBinMatching = ismatch;
         else if (ismatch == false)
             isBinMatching = ismatch;
+    }
+
+    public void DropBread(GameObject ingredient) 
+    {
+        Oven oven = ovenTransform.gameObject.GetComponent<Oven>();
+        oven.SetIsDropped(true);
+        Destroy(ingredient);
+        highlightedTrigger = null;
+        isOvenMatching = false;
+        oven = null;
+        isMatching = false;
+
+        for (int i = 0; i < breadCookPlace.Length; i++)
+        {
+            if (breadCookPlace[i].transform.childCount == 0)
+            {
+                isOvenMatching = false;
+                GameObject inst = Instantiate(cookableBread, breadCookPlace[i].transform);
+                inst.transform.localPosition = Vector3.zero;
+                break;
+            }
+        }
+        for (int i = 0; i < breadCookPlace.Length; i++)
+        {
+            if (breadCookPlace[i].transform.childCount == 0)
+            {
+                isOvenMatching = false;
+                GameObject inst = Instantiate(cookableBread, breadCookPlace[i].transform);
+                inst.transform.localPosition = Vector3.zero;
+                break;
+            }
+        }
     }
 
 }

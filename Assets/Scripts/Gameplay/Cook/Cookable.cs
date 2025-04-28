@@ -154,5 +154,10 @@ public class Cookable : IngredientTypes
     {
         cookTimer = 0f; 
     }
+
+    public void DropBread()
+    {
+        ingredientHolder.DropBread(gameObject);
+    }
 }
     
