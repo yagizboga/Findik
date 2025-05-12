@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1dc4af72e6fdb664a974c16e8de9f54e
+guid: cbbf759c78d80c441a90ddca978e0dab
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7980061265100902559
-    second: "Ba\u015Fl\u0131ks\u0131z489_20250402173149_0"
+      213: -1432621216265853204
+    second: Et2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -122,17 +122,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "Ba\u015Fl\u0131ks\u0131z489_20250402173149_0"
+      name: Et2_0
       rect:
         serializedVersion: 2
-        x: 217
-        y: 238
-        width: 1329
-        height: 1332
+        x: 131
+        y: 208
+        width: 1415
+        height: 1392
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 16f6ecf3f80214190800000000000000
-      internalID: -7980061265100902559
+      spriteID: ce629ca189e4e1ce0800000000000000
+      internalID: -1432621216265853204
       vertices: []
       indices: 
       edges: []
@@ -161,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "Ba\u015Fl\u0131ks\u0131z489_20250402173149_0": -7980061265100902559
+      Et2_0: -1432621216265853204
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

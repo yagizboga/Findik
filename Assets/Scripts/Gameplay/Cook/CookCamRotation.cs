@@ -13,7 +13,7 @@ public class CookCamRotation : MonoBehaviour
     private float targetZRotation;
 
     private bool isRotating = false;
-    public float rotationSpeedLerp = 5f;
+    public float rotationSpeedLerp = 3f;
     public float rotationSpeedMT = 90f; 
 
     private void Start()

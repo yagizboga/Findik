@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 4defbfa742137b044a23f488e6313c83
+guid: 32cbf5d193c83aa4ebbb5a307ec41bcc
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2865052018074870978
-    second: "Ba\u015Fl\u0131ks\u0131z490_20250402183516_0"
+      213: 6569198462195002601
+    second: Fritoz_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 500
+  spritePixelsToUnits: 600
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -122,17 +122,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "Ba\u015Fl\u0131ks\u0131z490_20250402183516_0"
+      name: Fritoz_0
       rect:
         serializedVersion: 2
-        x: 217
-        y: 238
-        width: 1329
-        height: 1332
+        x: 104
+        y: 209
+        width: 2245
+        height: 2072
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e3b91a78e5a4d38d0800000000000000
-      internalID: -2865052018074870978
+      spriteID: 9ecec2e323b7a2b50800000000000000
+      internalID: 6569198462195002601
       vertices: []
       indices: 
       edges: []
@@ -161,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "Ba\u015Fl\u0131ks\u0131z490_20250402183516_0": -2865052018074870978
+      Fritoz_0: 6569198462195002601
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

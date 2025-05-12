@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e76b1a9915a83804d9ba003214209c4f
+guid: 4282a06e15da0a147af82af3b32122d3
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6074953350327385473
-    second: "Ba\u015Fl\u0131ks\u0131z488_20250402223607_0"
+      213: 6363973574376738676
+    second: Marul2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 1000
+  spritePixelsToUnits: 500
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -122,17 +122,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "Ba\u015Fl\u0131ks\u0131z488_20250402223607_0"
+      name: Marul2_0
       rect:
         serializedVersion: 2
-        x: 470
-        y: 854
-        width: 881
-        height: 779
+        x: 131
+        y: 208
+        width: 1415
+        height: 1392
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f72caa64d1e61bba0800000000000000
-      internalID: -6074953350327385473
+      spriteID: 47fc2b48f30615850800000000000000
+      internalID: 6363973574376738676
       vertices: []
       indices: 
       edges: []
@@ -161,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "Ba\u015Fl\u0131ks\u0131z488_20250402223607_0": -6074953350327385473
+      Marul2_0: 6363973574376738676
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

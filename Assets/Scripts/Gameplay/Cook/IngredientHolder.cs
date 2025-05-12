@@ -4,7 +4,8 @@ using UnityEngine.InputSystem;
 
 public class IngredientHolder : IngredientTypes
 {
-    public IngredientType highlightedIngredient; 
+    public IngredientType highlightedIngredientType; 
+    private IngredientType holdingIngredientType;
     private GameObject currentIngredient; 
     private bool canSpawn = false;
     public GameObject[] ingredientPrefabs;
@@ -25,6 +26,11 @@ public class IngredientHolder : IngredientTypes
 
     public Transform ovenTransform;
 
+    public IngredientBox breadSlot;
+    public IngredientBox meatSlot;
+    public IngredientBox marulSlot;
+    public IngredientBox tomatoSlot;
+
     private void Update()
     {
         if (canDrag && currentIngredient != null)
@@ -35,16 +41,18 @@ public class IngredientHolder : IngredientTypes
         }
     }
 
-    public void SetCanSpawn(bool canSpawnStatus, IngredientType ingredientType)
+    public void SetCanSpawn(bool canSpawnStatus, IngredientType ingredientType, float materialAmount)
     {
+        if (materialAmount <= 0 && canSpawnStatus == true)
+            return;
         canSpawn = canSpawnStatus;
         if (canSpawn)
         {
-            highlightedIngredient = ingredientType;
+            highlightedIngredientType = ingredientType;
         }
         else
         {
-            highlightedIngredient = IngredientType.Meat; 
+            highlightedIngredientType = IngredientType.Meat; 
         }
     }
 
@@ -78,12 +86,13 @@ public class IngredientHolder : IngredientTypes
 
     void SpawnIngredient()
     {
-        int ingredientIndex = (int)highlightedIngredient; 
-
+        int ingredientIndex = (int)highlightedIngredientType;
+        holdingIngredientType = highlightedIngredientType;
+        DecreaseIngredient(holdingIngredientType, 20); 
         if (ingredientIndex >= 0 && ingredientIndex < ingredientPrefabs.Length)
         {
             currentIngredient = Instantiate(ingredientPrefabs[ingredientIndex], Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0, 0, 10), Quaternion.identity);
-            if(highlightedIngredient == IngredientType.Meat)
+            if(highlightedIngredientType == IngredientType.Meat)
             {
                 Cookable cookable = currentIngredient.GetComponent<Cookable>();
                 cookable.SetIsCooking(false);
@@ -147,6 +156,7 @@ public class IngredientHolder : IngredientTypes
             if (ingredient == currentIngredient)
             {
                 Destroy(ingredient);
+                IncreaseIngredient(holdingIngredientType, 20);
             }
             else
             {
@@ -155,6 +165,7 @@ public class IngredientHolder : IngredientTypes
                 //Debug.Log("ZEROED");
             }
         }
+        holdingIngredientType = IngredientType.Meat;
     }
 
     public void SetIsMatching(bool match)
@@ -219,6 +230,50 @@ public class IngredientHolder : IngredientTypes
                 inst.transform.localPosition = Vector3.zero;
                 break;
             }
+        }
+    }
+
+    public void IncreaseIngredient(IngredientType type, int amount)
+    {
+        switch (type)
+        {
+            case IngredientType.Bread:
+                breadSlot.IncreaseMaterial(amount);
+                break;
+            case IngredientType.Meat:
+                meatSlot.IncreaseMaterial(amount);
+                break;
+            case IngredientType.Marul:
+                marulSlot.IncreaseMaterial(amount);
+                break;
+            case IngredientType.Tomato:
+                tomatoSlot.IncreaseMaterial(amount);
+                break;
+            default:
+                Debug.LogWarning("IncreaseIngredient: Unknown IngredientType " + type);
+                break;
+        }
+    }
+
+    public void DecreaseIngredient(IngredientType type, int amount)
+    {
+        switch (type)
+        {
+            case IngredientType.Bread:
+                breadSlot.DecreaseMaterial(amount);
+                break;
+            case IngredientType.Meat:
+                meatSlot.DecreaseMaterial(amount);
+                break;
+            case IngredientType.Marul:
+                marulSlot.DecreaseMaterial(amount);
+                break;
+            case IngredientType.Tomato:
+                tomatoSlot.DecreaseMaterial(amount);
+                break;
+            default:
+                Debug.LogWarning("DecreaseIngredient: Unknown IngredientType " + type);
+                break;
         }
     }
 

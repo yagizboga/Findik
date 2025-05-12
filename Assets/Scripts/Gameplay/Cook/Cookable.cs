@@ -18,8 +18,8 @@ public class Cookable : IngredientTypes
     private SpriteRenderer spriteRenderer;
 
     private float cookTimer = 0f; 
-    private float cookTime = 5f;
-    private float burnTime = 10f;
+    private float cookTime = 10f;
+    private float burnTime = 20f;
 
     private float proximityThreshold = 0.25f;
 
