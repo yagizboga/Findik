@@ -111,7 +111,7 @@ public class IngredientHolder : IngredientTypes
         
         if (isMatching)
         {
-            Debug.Log("DROPPED after Match!");
+           // Debug.Log("DROPPED after Match!");
             IngredientTrigger trigger = highlightedTrigger.GetComponent<IngredientTrigger>();
             trigger.UpdateColor();
             trigger.SetIsDropped(true);

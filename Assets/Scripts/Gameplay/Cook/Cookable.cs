@@ -21,7 +21,7 @@ public class Cookable : IngredientTypes
     private float cookTime = 10f;
     private float burnTime = 20f;
 
-    private float proximityThreshold = 0.25f;
+    private float proximityThreshold = 0.5f;
 
     public static GameObject instance;
 
@@ -55,6 +55,13 @@ public class Cookable : IngredientTypes
 
     private void Update()
     {
+        Vector3 origin = transform.position;
+        Vector3 target = origin + Vector3.right * proximityThreshold; 
+
+        Debug.DrawLine(origin, target, Color.red);
+
+
+
         if (isCooking && !isDragging)
         {
             cookTimer += Time.deltaTime;
@@ -156,7 +163,7 @@ public class Cookable : IngredientTypes
 
     private void Drag()
     {
-        if (canDrag && !isDragBlocked && instance == gameObject)
+        if (canDrag && !isDragBlocked /*&& instance == gameObject*/)
         {
             isDragging = true;
 
@@ -202,8 +209,9 @@ public class Cookable : IngredientTypes
         Release();
     }
 
-    private void OnMouseEnter()
+   /* private void OnMouseEnter()
     {
+        Debug.Log("Mouse Entered");
         inRange = true;
         canDrag = true;
     }
@@ -213,7 +221,7 @@ public class Cookable : IngredientTypes
         inRange = false;
         canDrag = false;
     }
-
+   */
     private void StartCookTimer()
     {
         cookTimer = 0f; 

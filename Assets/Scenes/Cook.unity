@@ -511,7 +511,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.100525856, y: 0.21251145}
+  m_Offset: {x: -0.02963543, y: 0.086484134}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -521,7 +521,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 3.1732318, y: 0.9041863}
+  m_Size: {x: 2.9013634, y: 1.1562408}
   m_EdgeRadius: 0
 --- !u!114 &61457977
 MonoBehaviour:
@@ -536,6 +536,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   requiredIngredient: 2
+  detectionRadius: 1
 --- !u!1 &64804077
 GameObject:
   m_ObjectHideFlags: 0
@@ -2412,6 +2413,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   requiredIngredient: 1
+  detectionRadius: 1
 --- !u!1 &671953787
 GameObject:
   m_ObjectHideFlags: 0
@@ -10383,6 +10385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   requiredIngredient: 0
+  detectionRadius: 1
 --- !u!1 &1693461535
 GameObject:
   m_ObjectHideFlags: 0
@@ -10659,6 +10662,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   requiredIngredient: 3
+  detectionRadius: 1
 --- !u!61 &1739800153
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -10693,7 +10697,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.03189659, y: -0.03455949}
+  m_Offset: {x: 0.03189659, y: 0.0828985}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -10703,7 +10707,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 3.4319668, y: 1.2767096}
+  m_Size: {x: 0.7912711, y: 1.0417936}
   m_EdgeRadius: 0
 --- !u!1 &1751413733
 GameObject:
@@ -11217,7 +11221,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.17898667}
+  m_Offset: {x: 0.015753627, y: 0.10809624}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -11227,7 +11231,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 3.8852937, y: 1.0778491}
+  m_Size: {x: 4.42091, y: 0.9360683}
   m_EdgeRadius: 0
 --- !u!114 &1914010296
 MonoBehaviour:
@@ -11242,6 +11246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   requiredIngredient: 0
+  detectionRadius: 1
 --- !u!1 &1921421995
 GameObject:
   m_ObjectHideFlags: 0
