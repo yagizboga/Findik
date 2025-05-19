@@ -35,7 +35,7 @@ public class CookCamRotation : MonoBehaviour
             float newZ = Mathf.LerpAngle(currentZ, targetZRotation, Time.deltaTime * rotationSpeedLerp);
             desksTransform.rotation = Quaternion.Euler(0f, 0f, newZ);
 
-            if (Mathf.Abs(Mathf.DeltaAngle(currentZ, targetZRotation)) < 0.25f)
+            if (Mathf.Abs(Mathf.DeltaAngle(currentZ, targetZRotation)) < 0.9f)
             {
                 desksTransform.rotation = Quaternion.Euler(0f, 0f, targetZRotation);
                 foreach (GameObject btn in buttons)

@@ -3,10 +3,12 @@ using UnityEngine;
 public class Bin : IngredientTypes
 {
     private IngredientHolder ingredientHolder;
+    private Animator animator;
 
     private void Start()
     {
         ingredientHolder = FindFirstObjectByType<IngredientHolder>();
+        animator = GetComponent<Animator>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -15,6 +17,8 @@ public class Bin : IngredientTypes
         {
             ingredientHolder.SetHighlightedTrigger(gameObject);
             ingredientHolder.SetIsBinMatching(true);
+            BinAnimation(true);
+
         }
     }
 
@@ -24,6 +28,12 @@ public class Bin : IngredientTypes
         {
             ingredientHolder.SetIsBinMatching(false);
             ingredientHolder.SetHighlightedTrigger(null);
+            BinAnimation(false);
         }
+    }
+
+    public void BinAnimation(bool hold)
+    {
+        animator.SetBool("isHolding", hold);
     }
 }

@@ -31,6 +31,8 @@ public class IngredientHolder : IngredientTypes
     public IngredientBox marulSlot;
     public IngredientBox tomatoSlot;
 
+    public Bin bin;
+
     private void Update()
     {
         if (canDrag && currentIngredient != null)
@@ -149,6 +151,7 @@ public class IngredientHolder : IngredientTypes
         }
         else if (isBinMatching)
         {
+            bin.BinAnimation(false);
             Destroy(ingredient);
         }
         else
@@ -276,5 +279,10 @@ public class IngredientHolder : IngredientTypes
                 break;
         }
     }
+
+    public bool GetCanDrag()
+    {
+        return canDrag;
+    }   
 
 }
