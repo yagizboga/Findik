@@ -23,8 +23,8 @@ public class CookCamRotation : MonoBehaviour
 
     private void Update()
     {
-        //RotateByLerp();
-        RotateByMoveTowardsAngle();
+        RotateByLerp();
+        //RotateByMoveTowardsAngle();
     }
 
     private void RotateByLerp()
@@ -32,10 +32,14 @@ public class CookCamRotation : MonoBehaviour
         if (isRotating)
         {
             float currentZ = desksTransform.eulerAngles.z;
-            float newZ = Mathf.LerpAngle(currentZ, targetZRotation, Time.deltaTime * rotationSpeedLerp);
+            float angleDiff = Mathf.Abs(Mathf.DeltaAngle(currentZ, targetZRotation));
+
+            float dynamicLerpSpeed = rotationSpeedLerp + (1f / Mathf.Max(angleDiff, 0.01f)) * 10f;
+
+            float newZ = Mathf.LerpAngle(currentZ, targetZRotation, Time.deltaTime * dynamicLerpSpeed);
             desksTransform.rotation = Quaternion.Euler(0f, 0f, newZ);
 
-            if (Mathf.Abs(Mathf.DeltaAngle(currentZ, targetZRotation)) < 0.9f)
+            if (angleDiff < 0.1f)
             {
                 desksTransform.rotation = Quaternion.Euler(0f, 0f, targetZRotation);
                 foreach (GameObject btn in buttons)
@@ -46,6 +50,7 @@ public class CookCamRotation : MonoBehaviour
             }
         }
     }
+
 
     private void RotateByMoveTowardsAngle()
     {
