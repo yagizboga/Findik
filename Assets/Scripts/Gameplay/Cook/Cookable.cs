@@ -30,11 +30,27 @@ public class Cookable : IngredientTypes
 
     private bool inRange = false;
 
+
+    public InputActionAsset inputActions;
+    private InputAction dragAction;
+    private InputAction releaseAction;
+
     private void Start()
     {
         ingredientHolder = GameObject.FindGameObjectWithTag("Ingredient Holder").GetComponent<IngredientHolder>();
         ingredient = GetComponent<Ingredient>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        //instance = gameObject;
+
+        dragAction = inputActions.FindAction("Select");
+        releaseAction = inputActions.FindAction("Select");
+
+        dragAction.performed += OnDragPerformed;
+        releaseAction.canceled += OnReleaseCanceled;
+
+        dragAction.Enable();
+        releaseAction.Enable();
     }
 
     private void Update()
@@ -109,7 +125,7 @@ public class Cookable : IngredientTypes
         isCooking = sett;
         isDragBlocked = true;
     }
-    public void DragIngredientInput(InputAction.CallbackContext context)
+   /* public void DragIngredientInput(InputAction.CallbackContext context)
     {
         if (context.performed && canDrag && !isDragBlocked && instance == gameObject)
         {
@@ -136,6 +152,54 @@ public class Cookable : IngredientTypes
             transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
 
         }
+    }*/
+
+    private void Drag()
+    {
+        if (canDrag && !isDragBlocked && instance == gameObject)
+        {
+            isDragging = true;
+
+            if (originalParent == null)
+                originalParent = transform.parent;
+
+            transform.SetParent(null);
+        }
+    }
+
+    private void Release()
+    {
+        if (isDragging && !isDragBlocked)
+        {
+            isDragging = false;
+
+            if (originalParent != null)
+            {
+                transform.SetParent(originalParent);
+            }
+
+            ingredientHolder.DropIngredient(gameObject);
+            transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (dragAction != null)
+            dragAction.performed -= OnDragPerformed;
+
+        if (releaseAction != null)
+            releaseAction.canceled -= OnReleaseCanceled;
+    }
+
+    private void OnDragPerformed(InputAction.CallbackContext ctx)
+    {
+        Drag();
+    }
+
+    private void OnReleaseCanceled(InputAction.CallbackContext ctx)
+    {
+        Release();
     }
 
     private void OnMouseEnter()
