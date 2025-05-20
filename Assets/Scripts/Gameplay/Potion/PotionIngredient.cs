@@ -25,9 +25,22 @@ public class PotionIngredient : PotionIngredientTypes
 
     public int amount = 3;
 
+    public InputActionAsset inputActions;
+    private InputAction dragAction;
+    private InputAction releaseAction;
+
     private void Start()
     {
         UpdateVisual();
+
+        dragAction = inputActions.FindAction("Select");
+        releaseAction = inputActions.FindAction("Select");
+
+        dragAction.performed += DragIngredientInput;
+        releaseAction.canceled += ReleaseIngredientInput;
+
+        dragAction.Enable();
+        releaseAction.Enable();
     }
 
     private void Update()
@@ -169,5 +182,14 @@ public class PotionIngredient : PotionIngredientTypes
     public void SetIsMatching(bool match)
     {
         isMatching = match;
+    }
+
+    private void OnDestroy()
+    {
+        if (dragAction != null)
+            dragAction.performed -= DragIngredientInput;
+
+        if (releaseAction != null)
+            releaseAction.canceled -= ReleaseIngredientInput;
     }
 }
