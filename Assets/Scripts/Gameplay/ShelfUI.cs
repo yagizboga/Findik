@@ -48,8 +48,6 @@ public class ShelfUI : MonoBehaviour
 
     public void DragHandler(InputAction.CallbackContext ctx ){
         if(ctx.performed && shelf.GetComponent<shelf>().isActive && currentItem != null){
-            //currentItem.GetComponent<ShelfItem>().GetItemGrid().AlignToChild();
-            //currentItem.GetComponent<ShelfItem>().GetItemGrid().AlignToCenter(mousePos);
             oldPosition = new Vector2(currentItem.gameObject.transform.position.x,currentItem.gameObject.transform.position.y);
             isDragging = true;
         }
