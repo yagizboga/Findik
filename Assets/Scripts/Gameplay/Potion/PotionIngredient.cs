@@ -19,11 +19,60 @@ public class PotionIngredient : PotionIngredientTypes
     private bool isMatching = false;
 
 
+    public GameObject fullVisual;
+    public GameObject medVisual;
+    public GameObject lowVisual;
+
+    public int amount = 3;
+
+    private void Start()
+    {
+        UpdateVisual();
+    }
+
     private void Update()
     {
         HandleDragging();
     }
 
+    public void UseIngredient()
+    {
+        amount = Mathf.Max(0, amount - 1);
+        UpdateVisual();
+        transform.localPosition = Vector3.zero; 
+    }
+    private void UpdateVisual()
+    {
+        if (amount >= 3)
+        {
+            SetActiveSafe(fullVisual, true);
+            SetActiveSafe(medVisual, false);
+            SetActiveSafe(lowVisual, false);
+        }
+        else if (amount == 2)
+        {
+            SetActiveSafe(fullVisual, false);
+            SetActiveSafe(medVisual, true);
+            SetActiveSafe(lowVisual, false);
+        }
+        else if (amount == 1)
+        {
+            SetActiveSafe(fullVisual, false);
+            SetActiveSafe(medVisual, false);
+            SetActiveSafe(lowVisual, true);
+        }
+        else // amount == 0
+        {
+            SetActiveSafe(fullVisual, false);
+            SetActiveSafe(medVisual, false);
+            SetActiveSafe(lowVisual, false);
+        }
+    }
+    private void SetActiveSafe(GameObject obj, bool active)
+    {
+        if (obj != null)
+            obj.SetActive(active);
+    }
     private void HandleDragging()
     {
         if (Pointer.current != null)
@@ -77,7 +126,7 @@ public class PotionIngredient : PotionIngredientTypes
 
     public void DragIngredientInput(InputAction.CallbackContext context)
     {
-        if (context.performed && canDrag && !isDragBlocked && instance == gameObject)
+        if (context.performed && canDrag && !isDragBlocked && instance == gameObject && amount > 0)
         {
             isDragging = true;
         }

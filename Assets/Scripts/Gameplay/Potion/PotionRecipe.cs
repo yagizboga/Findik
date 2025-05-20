@@ -136,7 +136,7 @@ public class PotionRecipe : PotionIngredientTypes
         else if (ingredientType == requiredTypes[currentIngredientIndex])
         {
             addedCounts[ingredientType]++;
-            Destroy(ingredient);
+            potionComponent.UseIngredient();
             //spoon.ResetMix();
             UpdateIngredientTextUI(ingredientType);
             currentIngredientIndex++;
@@ -161,7 +161,7 @@ public class PotionRecipe : PotionIngredientTypes
                 }
 
                 addedCounts[ingredientType]++;
-                Destroy(ingredient);
+                potionComponent.UseIngredient();
                 //spoon.ResetMix();
                 UpdateIngredientTextUI(ingredientType);
                 currentIngredientIndex = futureIndex + 1;
@@ -186,7 +186,7 @@ public class PotionRecipe : PotionIngredientTypes
                     }
                     UpdatePotionQualityUI();
                     Debug.Log($"Wrong ingredient! PotionQuality: {potionQuality}");
-                    Destroy(ingredient);
+                    potionComponent.UseIngredient();
                 }
             }
         }
