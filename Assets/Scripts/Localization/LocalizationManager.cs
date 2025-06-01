@@ -12,6 +12,8 @@ public class LocalizationManager : MonoBehaviour
     [SerializeField] private Button chineseButton;
     [SerializeField] private Button germanButton;
 
+    [SerializeField] private DialogueSystem dialogueSystem; 
+
     private void Awake()
     {
         /*if (LocalizationSettings.SelectedLocale == null)
@@ -35,6 +37,7 @@ public class LocalizationManager : MonoBehaviour
             {
                 LocalizationSettings.SelectedLocale = locale;
                 Debug.Log($"Language set to: {locale.LocaleName}");
+                dialogueSystem.ShowLine();
                 return;
             }
         }

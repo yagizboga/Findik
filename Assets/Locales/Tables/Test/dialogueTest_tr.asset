@@ -10,32 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
-  m_Name: Test Label_tr
+  m_Name: dialogueTest_tr
   m_EditorClassIdentifier: 
   m_LocaleId:
     m_Code: tr
-  m_SharedData: {fileID: 11400000, guid: 9cce104fe1cb97047b89e4375bc02d76, type: 2}
+  m_SharedData: {fileID: 11400000, guid: ce2c75e4db15b614caa2c2acd89dd62b, type: 2}
   m_Metadata:
     m_Items: []
   m_TableData:
-  - m_Id: 663454478336
-    m_Localized: "T\xDCRK\xC7E"
+  - m_Id: 37966311424
+    m_Localized: S.A.
     m_Metadata:
       m_Items: []
-  - m_Id: 4448222441472
-    m_Localized: tr2
+  - m_Id: 63245381632
+    m_Localized: Bu 1
     m_Metadata:
       m_Items: []
-  - m_Id: 4467075837952
-    m_Localized: tr3
+  - m_Id: 111697981440
+    m_Localized: Bu 2
     m_Metadata:
       m_Items: []
-  - m_Id: 4480703131648
-    m_Localized: tr4
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2573878655709184
-    m_Localized: ileri
+  - m_Id: 142203154432
+    m_Localized: Bu da 3
     m_Metadata:
       m_Items: []
   references:

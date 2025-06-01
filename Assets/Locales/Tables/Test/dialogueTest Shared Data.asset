@@ -10,39 +10,35 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
-  m_Name: Test Label Shared Data
+  m_Name: dialogueTest Shared Data
   m_EditorClassIdentifier: 
-  m_TableCollectionName: Test Label
-  m_TableCollectionNameGuidString: 9cce104fe1cb97047b89e4375bc02d76
+  m_TableCollectionName: dialogueTest
+  m_TableCollectionNameGuidString: ce2c75e4db15b614caa2c2acd89dd62b
   m_Entries:
-  - m_Id: 663454478336
-    m_Key: mainMenu.play
+  - m_Id: 37966311424
+    m_Key: test0
     m_Metadata:
       m_Items: []
-  - m_Id: 4448222441472
+  - m_Id: 63245381632
+    m_Key: test1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 111697981440
     m_Key: test2
     m_Metadata:
       m_Items: []
-  - m_Id: 4467075837952
+  - m_Id: 142203154432
     m_Key: test3
-    m_Metadata:
-      m_Items: []
-  - m_Id: 4480703131648
-    m_Key: test4
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2573878655709184
-    m_Key: next
     m_Metadata:
       m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
-    rid: 6316916984473714906
+    rid: 4279939211085742169
   references:
     version: 2
     RefIds:
-    - rid: 6316916984473714906
+    - rid: 4279939211085742169
       type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
       data:
-        m_CustomEpoch: 1748192593529
+        m_CustomEpoch: 1748805714996

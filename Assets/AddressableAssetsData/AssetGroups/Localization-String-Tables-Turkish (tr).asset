@@ -15,6 +15,12 @@ MonoBehaviour:
   m_GroupName: Localization-String-Tables-Turkish (tr)
   m_GUID: 87bd6c6bb8c3d9745861920529706b97
   m_SerializeEntries:
+  - m_GUID: 2e855c7f57207b54c8be9d0bb2802182
+    m_Address: dialogueTest_tr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-tr
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a8f9b083a8ac21f4ebcd689b3d38082d
     m_Address: Test Label_tr
     m_ReadOnly: 1
