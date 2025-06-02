@@ -20,6 +20,14 @@ public class LocalizationManager : MonoBehaviour
         {
             LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[0];
         }*/
+
+        string savedLanguage = PlayerPrefs.GetString("SelectedLanguage", "");
+
+        if (!string.IsNullOrEmpty(savedLanguage) && System.Enum.TryParse(savedLanguage, out LanguageType savedLangEnum))
+        {
+            SetLanguage(savedLangEnum);
+        }
+
         turkishButton.onClick.AddListener(() => SetLanguage(LanguageType.Turkish));
         englishButton.onClick.AddListener(() => SetLanguage(LanguageType.English));
         spanishButton.onClick.AddListener(() => SetLanguage(LanguageType.Spanish));
@@ -37,6 +45,10 @@ public class LocalizationManager : MonoBehaviour
             {
                 LocalizationSettings.SelectedLocale = locale;
                 Debug.Log($"Language set to: {locale.LocaleName}");
+
+                PlayerPrefs.SetString("SelectedLanguage", languageType.ToString());
+                PlayerPrefs.Save();
+
                 dialogueSystem.ShowLine();
                 return;
             }
