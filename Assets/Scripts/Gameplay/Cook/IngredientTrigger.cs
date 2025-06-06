@@ -27,9 +27,49 @@ public class IngredientTrigger : IngredientTypes
         ingredientLayer = LayerMask.GetMask("Ingredient");
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (!collision.CompareTag("Ingredient") || isDropped)
+        {
+            /*ingredientHolder.SetIsMatching(false);
+            ingredientHolder.SetHighlightedTrigger(null);*/
+            return;
+        }
+
+        Ingredient ingredient = collision.GetComponent<Ingredient>();
+        if (ingredient == null) return;
+
+        if (ingredient.ingredientType != requiredIngredient) return;
+
+        bool isValid = false;
+
+        if (requiredIngredient == IngredientType.Meat || requiredIngredient == IngredientType.Bread)
+        {
+            Cookable cookable = collision.GetComponent<Cookable>();
+            if (cookable != null && cookable.isCooked)
+                isValid = true;
+        }
+        else
+        {
+            isValid = true;
+        }
+
+        if (isValid)
+        {
+            ingredientHolder.SetIsMatching(true);
+            //Debug.Log("TRUEEE");
+            ingredientHolder.SetHighlightedTrigger(gameObject);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        ExitIngredient();
+    }
+
     private void Update()
     {
-        UpdateRayCastHit(); 
+        //UpdateRayCastHit(); // not in use anymore
     }
 
     public void CheckIngredient(Collider2D hit)
