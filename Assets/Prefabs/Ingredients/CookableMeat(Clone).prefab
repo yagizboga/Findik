@@ -30,9 +30,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5128975421453110829}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.35, y: 1.35, z: 1.35}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -81,8 +81,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 6
-  m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
-  m_Color: {r: 0.5529412, g: 0.3529412, b: 0.28627452, a: 1}
+  m_Sprite: {fileID: -6739316731238964956, guid: 00ac023eaba8c6149b7276603a93e42c, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -184,7 +184,7 @@ MonoBehaviour:
   isCooking: 1
   canDrag: 0
   isDragBlocked: 0
-  cookedColor: {r: 0.50980395, g: 0.1254902, b: 0, a: 1}
+  cookedColor: {r: 0.5529412, g: 0.3529412, b: 0.28627452, a: 1}
   burnedColor: {r: 0.13725491, g: 0.08627451, b: 0.06666667, a: 1}
   inputActions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
 --- !u!114 &5553018672511214727
