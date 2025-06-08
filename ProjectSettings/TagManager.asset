@@ -8,6 +8,8 @@ TagManager:
   - itemCell
   - farmGridCell
   - farm
+  - oven
+  - irons
   layers:
   - Default
   - TransparentFX
@@ -21,7 +23,7 @@ TagManager:
   - 
   - 
   - Ingredient
-  - 
+  - Fluids
   - 
   - 
   - 

@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: 2
   image: {fileID: 4338608209347774417, guid: 9daacdee0d1e1bf4093ccb4901e3a331, type: 3}
-  type: 1
+  phase1: {fileID: 821606085, guid: 3a39270600704ed4398e8389575dd640, type: 3}
+  phase2: {fileID: -1875911102, guid: 3a39270600704ed4398e8389575dd640, type: 3}
+  phase3: {fileID: -1599201840, guid: 3a39270600704ed4398e8389575dd640, type: 3}
