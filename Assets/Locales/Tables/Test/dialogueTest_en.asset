@@ -50,6 +50,38 @@ MonoBehaviour:
     m_Localized: And this is This is 2.3
     m_Metadata:
       m_Items: []
+  - m_Id: 7925319075360768
+    m_Localized: Hello there!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7925321646469120
+    m_Localized: Oh, hi mister.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7925322862817280
+    m_Localized: Welcome.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7925323445825536
+    m_Localized: Thanks, how are you?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7925324645396480
+    m_Localized: . . .
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7925326117597184
+    m_Localized: '. . . '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7926071625773056
+    m_Localized: Okay then, see you soon!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7926075358703616
+    m_Localized: yeah.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

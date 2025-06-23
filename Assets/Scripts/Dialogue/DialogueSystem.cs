@@ -28,12 +28,55 @@ public class DialogueSystem : MonoBehaviour
 
     // AÇIKLAMA2: dialogueKeys, diyalogun hangi satýrlarýnýn gösterileceðini belirten key'leri içeren bir liste. bu liste, diyalog baþlatýlýrken parametre olarak alýnacak.
 
+    // ONEMLi: Kodu guncelle, e'ye basinca diyalog acilmadan once, hangi diyalogun acilacagi bilgisi de alinsin. bu bilgi, bir liste olarak tutulacak 
+
+
+
+    public GameObject dialogueScreen;
+    public InputActionReference dialogueAdvanceAction;
+
+    private bool inDialogue = false;
+    private bool hasStartedDialogue = false;
+
+    public Image playerImage;
+    public Image npcImage;
+
+
 
     void Start()
     {
         continueButton.onClick.AddListener(NextLine);
         //dialoguePanel.SetActive(false);
-        StartDialogue(dialogueKeys);
+        //StartDialogue(dialogueKeys);
+        dialogueScreen.SetActive(false);
+    }
+
+    void OnEnable()
+    {
+        dialogueAdvanceAction.action.Enable();
+        dialogueAdvanceAction.action.performed += OnDialogueAdvance;
+    }
+
+    void OnDisable()
+    {
+        dialogueAdvanceAction.action.performed -= OnDialogueAdvance;
+        dialogueAdvanceAction.action.Disable();
+    }
+
+    private void OnDialogueAdvance(InputAction.CallbackContext context)
+    {
+        if (!hasStartedDialogue)
+        {
+            hasStartedDialogue = true;
+            dialogueScreen.SetActive(true);
+            inDialogue = true;
+
+            StartDialogue(dialogueKeys);
+        }
+        else if (inDialogue)
+        {
+            NextLine();
+        }
     }
 
     public void StartDialogue(List<string> keys)
@@ -48,6 +91,7 @@ public class DialogueSystem : MonoBehaviour
     public void ShowLine()
     {
         string key = dialogueKeys[currentIndex];
+        UpdateSpeakerHighlight(key);
         StartCoroutine(LoadLocalizedLine(key));
     }
 
@@ -94,9 +138,36 @@ public class DialogueSystem : MonoBehaviour
 
     void EndDialogue()
     {
-        //dialoguePanel.SetActive(false);
-        isDialogueActive = false;
-        Debug.Log("dialogue ended");
+        dialogueScreen.SetActive(false);
+        inDialogue = false;
+        hasStartedDialogue = false;
+
+        Debug.Log("Dialogue ended");
+    }
+
+    private void UpdateSpeakerHighlight(string key)
+    {
+        if (key.ToLower().Contains("player"))
+        {
+            SetImageColor(playerImage, Color.white);
+            SetImageColor(npcImage, Color.black);
+        }
+        else if (key.ToLower().Contains("npc"))
+        {
+            SetImageColor(playerImage, Color.black);
+            SetImageColor(npcImage, Color.white);
+        }
+        else
+        {
+            SetImageColor(playerImage, Color.white);
+            SetImageColor(npcImage, Color.white);
+        }
+    }
+
+    private void SetImageColor(Image image, Color color)
+    {
+        if (image != null)
+            image.color = color;
     }
 
 }
