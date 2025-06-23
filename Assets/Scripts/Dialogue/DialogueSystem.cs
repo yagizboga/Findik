@@ -41,6 +41,10 @@ public class DialogueSystem : MonoBehaviour
     public Image playerImage;
     public Image npcImage;
 
+    private Coroutine typeCoroutine;
+    private bool isLineFullyRevealed = false;
+    [SerializeField] private float typingSlowness = 0.03f; 
+
 
 
     void Start()
@@ -75,7 +79,19 @@ public class DialogueSystem : MonoBehaviour
         }
         else if (inDialogue)
         {
-            NextLine();
+            if (!isLineFullyRevealed)
+            {
+                // Hemen tüm satýrý göster
+                if (typeCoroutine != null)
+                    StopCoroutine(typeCoroutine);
+
+                var key = dialogueKeys[currentIndex];
+                StartCoroutine(ShowFullLineImmediately(key));
+            }
+            else
+            {
+                NextLine();
+            }
         }
     }
 
@@ -109,6 +125,53 @@ public class DialogueSystem : MonoBehaviour
 
             if (entry != null)
             {
+                string fullText = entry.GetLocalizedString();
+
+                if (typeCoroutine != null)
+                    StopCoroutine(typeCoroutine);
+
+                typeCoroutine = StartCoroutine(TypeLine(fullText));
+            }
+            else
+            {
+                dialogueText.text = "[Key Not Found: " + key + "]";
+                isLineFullyRevealed = true;
+            }
+        }
+        else
+        {
+            dialogueText.text = "[Table Not Loaded]";
+            isLineFullyRevealed = true;
+        }
+    }
+
+    IEnumerator TypeLine(string fullLine)
+    {
+        isLineFullyRevealed = false;
+        dialogueText.text = "";
+
+        foreach (char letter in fullLine)
+        {
+            dialogueText.text += letter;
+            yield return new WaitForSeconds(typingSlowness);
+        }
+
+        isLineFullyRevealed = true;
+    }
+
+    IEnumerator ShowFullLineImmediately(string key)
+    {
+        var tableLoading = LocalizationSettings.StringDatabase.GetTableAsync(tableName);
+        yield return tableLoading;
+
+        StringTable table = tableLoading.Result;
+
+        if (table != null)
+        {
+            StringTableEntry entry = table.GetEntry(key);
+
+            if (entry != null)
+            {
                 dialogueText.text = entry.GetLocalizedString();
             }
             else
@@ -120,6 +183,8 @@ public class DialogueSystem : MonoBehaviour
         {
             dialogueText.text = "[Table Not Loaded]";
         }
+
+        isLineFullyRevealed = true;
     }
 
 

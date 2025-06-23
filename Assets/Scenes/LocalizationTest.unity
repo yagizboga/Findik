@@ -2953,6 +2953,7 @@ MonoBehaviour:
   dialogueAdvanceAction: {fileID: 3015629469605078375, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   playerImage: {fileID: 1284655625}
   npcImage: {fileID: 1479972624}
+  typingSlowness: 0.035
 --- !u!4 &1248949013
 Transform:
   m_ObjectHideFlags: 0
