@@ -2,6 +2,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using System.Collections.Specialized;
 using TMPro;
+using Unity.Collections;
 
 public class Grid{
     int width,height;
@@ -41,7 +42,7 @@ public class Grid{
                                             ,new Vector3(cellMiddlePositions[x,y].x + cellSize/20f,cellMiddlePositions[x,y].y,0)
                                             ,Color.red,1000f);
                 valueText[x,y] = new GameObject();
-                Debug.Log(valueText[x,y] + " " + valueText[x,y].transform.position);
+//                Debug.Log(valueText[x,y] + " " + valueText[x,y].transform.position);
                 valueText[x,y].AddComponent<TextMeshPro>();
                 valueText[x,y].GetComponent<RectTransform>().anchoredPosition = cellMiddlePositions[x,y];
                 valueText[x,y].gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(cellSize,cellSize);
@@ -51,6 +52,10 @@ public class Grid{
                 valueText[x,y].GetComponent<TextMeshPro>().fontSize = cellSize*4;
                 valueText[x,y].GetComponent<TextMeshPro>().sortingOrder = 7;
                 valueText[x,y].transform.SetParent(textParentCanvas.transform);
+
+                valueText[x,y].AddComponent<BoxCollider2D>();
+                valueText[x,y].GetComponent<BoxCollider2D>().isTrigger = true;
+                valueText[x,y].GetComponent<BoxCollider2D>().size = new Vector2(cellSize,cellSize);
             }
 
 
@@ -101,7 +106,7 @@ public class Grid{
     }
 
 
-    public void AlingToCenter(Vector3 alignTo){
+    public void AlignToCenter(Vector3 alignTo){
         textParentCanvas.transform.position = alignTo - new Vector3(width * cellSize / 2 , height * cellSize / 2);
     }
 
@@ -118,6 +123,7 @@ public class Grid{
         }
     }
 
+
     public void TransposeMatrix(){
             int [,] tempValues = new int[height,width];
             for(int x = 0;x< width;x++){
@@ -133,6 +139,115 @@ public class Grid{
                     valueText[x,y].GetComponent<RectTransform>().anchoredPosition = cellMiddlePositions[x,y];
                 }
             }
+    }
+
+    public void SendRaycastToGrid(Grid grid){
+        for(int x = 0;x<GetSize().x;x++){
+            for(int y=0;y<GetSize().y;y++){
+                Vector2 cellRaycastPosition = new Ray(new Vector2(GetValueText(x,y).transform.position.x,GetValueText(x,y).transform.position.y),new Vector3(0,0,1)).GetPoint(10f);
+                if(GetCellValue(x,y) == 1){
+                    grid.SetCellValue((int)grid.GetWorldToGridPosition(cellRaycastPosition).x,(int)grid.GetWorldToGridPosition(cellRaycastPosition).y,1);
+                }
+
+
+            }
+        }
+
+    }
+
+    public void SetGridPosToGrid(Grid grid){
+        for(int x = 0;x<width;x++){
+            for(int y = 0;y<height;y++){
+                valueText[x,y].transform.position =grid.cellMiddlePositions[(int)grid.GetWorldToGridPosition(valueText[x,y].transform.position).x,(int)grid.GetWorldToGridPosition(valueText[x,y].transform.position).y];
+            }
+        }
+    }
+
+    public bool isOnGrid(Grid grid){
+        for(int x = 0;x<width;x++){
+            for(int y =0;y<height;y++){
+                if(grid.GetWorldToGridPosition(new Vector3(valueText[x,y].transform.position.x,valueText[x,y].transform.position.y,0)).x > grid.GetSize().x ||
+                    grid.GetWorldToGridPosition(new Vector3(valueText[x,y].transform.position.x,valueText[x,y].transform.position.y,0)).y > grid.GetSize().y ||
+                    grid.GetWorldToGridPosition(new Vector3(valueText[x,y].transform.position.x,valueText[x,y].transform.position.y,0)).x < 0 ||
+                    grid.GetWorldToGridPosition(new Vector3(valueText[x,y].transform.position.x,valueText[x,y].transform.position.y,0)).y < 0)
+                    {
+                       // Debug.Log(grid.GetWorldToGridPosition(new Vector3(valueText[x,y].transform.position.x,valueText[x,y].transform.position.y,0)).x + " " +
+                        //        grid.GetWorldToGridPosition(new Vector3(valueText[x,y].transform.position.x,valueText[x,y].transform.position.y,0)).y
+                         //       + " " + width + " "  + height);
+                        return false;
+
+                    }
+            }
+        }
+        return true;
+    }
+
+    public bool isGridFull(Grid grid){
+        for(int x=0;x<width;x++){
+            for(int y=0;y<height;y++){
+                Debug.Log(grid.GetCellValue((int)grid.GetWorldToGridPosition(new Vector3(valueText[x,y].transform.position.x,valueText[x,y].transform.position.y,0)).x,
+                                    (int)grid.GetWorldToGridPosition(new Vector3(valueText[x,y].transform.position.x,valueText[x,y].transform.position.y,0)).y));
+                if(grid.GetCellValue((int)grid.GetWorldToGridPosition(new Vector3(valueText[x,y].transform.position.x,valueText[x,y].transform.position.y,0)).x,
+                                    (int)grid.GetWorldToGridPosition(new Vector3(valueText[x,y].transform.position.x,valueText[x,y].transform.position.y,0)).y) == 1){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public Vector2 GetCellWorldPositions(int x,int y){
+            return valueText[x,y].transform.position;
+    }
+
+    public Vector2 GetGridPosToGrid(Grid grid,int xPos,int yPos){
+        if(xPos < width && yPos < height && xPos >= 0 && yPos >= 0){
+            return grid.GetWorldToGridPosition(valueText[xPos,yPos].transform.position);
+        }
+        else{return new Vector2(-1,-1);}
+    }
+
+    public void SetCellPosition(int x,int y,float posX,float posY){
+        valueText[x,y].transform.position = new Vector2(posX,posY);
+    }
+
+    public void ToItem(){
+        for(int x = 0;x< width;x++){
+            for(int y = 0;y<height;y++){
+                valueText[x,y].tag = "itemCell";
+            }
+        }
+    }
+
+    public void AlignToChild(){
+        Vector2 [,]temp = new Vector2[width,height];
+        for(int x = 0;x<width;x++){
+            for(int y=0;y<height;y++){
+                temp[x,y] = valueText[x,y].transform.position;
+            }
+        }
+
+        valueText[0,0].transform.parent.transform.parent.gameObject.transform.position = new Vector3(width * cellSize / 2f , height * cellSize / 2f,0);
+    
+        for(int x = 0;x<width;x++){
+            for(int y=0;y<height;y++){
+                valueText[x,y].transform.position = temp[x,y];
+            }
+        }
+    }
+
+    public Vector2 AlignToValueText(GameObject obj){
+        float xAvg=0,yAvg=0;
+
+        for(int x=0;x<width;x++){
+            xAvg += valueText[x,0].transform.position.x;
+        }
+        for(int y=0;y<height;y++){
+            yAvg += valueText[0,y].transform.position.y;
+        }
+        xAvg = xAvg/width;
+        yAvg = yAvg/height;
+        return new Vector2(xAvg,yAvg);
     }
 
 
