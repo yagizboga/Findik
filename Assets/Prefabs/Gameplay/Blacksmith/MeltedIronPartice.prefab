@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3179017971987621060}
   m_Layer: 12
   m_Name: MeltedIronPartice
-  m_TagString: Untagged
+  m_TagString: meltedIronParticle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

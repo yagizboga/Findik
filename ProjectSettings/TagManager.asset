@@ -10,6 +10,7 @@ TagManager:
   - farm
   - oven
   - irons
+  - meltedIronParticle
   layers:
   - Default
   - TransparentFX
