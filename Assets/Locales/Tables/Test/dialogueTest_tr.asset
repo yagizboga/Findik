@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: dialogueTest_tr
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: tr
+  m_SharedData: {fileID: 11400000, guid: ce2c75e4db15b614caa2c2acd89dd62b, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 37966311424
+    m_Localized: S.A.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63245381632
+    m_Localized: Bu 1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 111697981440
+    m_Localized: Bu 2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 142203154432
+    m_Localized: Bu da 3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 319389106171904
+    m_Localized: Merhaba
+    m_Metadata:
+      m_Items: []
+  - m_Id: 319392411283456
+    m_Localized: Bu 2.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 319397389922304
+    m_Localized: Bu 2.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 319399319302144
+    m_Localized: Bu da 2.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7925319075360768
+    m_Localized: S.A.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7925321646469120
+    m_Localized: A.S.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7925322862817280
+    m_Localized: "Ho\u015Fgeldin."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7925323445825536
+    m_Localized: "Ho\u015Fbuldum. Nas\u0131ls\u0131n?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7925324645396480
+    m_Localized: . . .
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7925326117597184
+    m_Localized: . . .
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7926071625773056
+    m_Localized: "G\xF6r\xFC\u015F\xFCr\xFCz o zaman?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7926075358703616
+    m_Localized: bb.
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

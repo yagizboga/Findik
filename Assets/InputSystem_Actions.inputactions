@@ -103,6 +103,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "DialogueAdvance",
+                    "type": "Button",
+                    "id": "f879dd4c-0d80-41e2-b3be-759cfacb52f8",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -499,6 +508,17 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a95a33fc-d912-4b3b-beba-41fe580b0b9e",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DialogueAdvance",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
