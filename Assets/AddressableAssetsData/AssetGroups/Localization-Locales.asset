@@ -15,38 +15,14 @@ MonoBehaviour:
   m_GroupName: Localization-Locales
   m_GUID: f7c76705261c23249978b58f936e4d3c
   m_SerializeEntries:
-  - m_GUID: 11b45accc8ee5c542ada7d61b3c23300
-    m_Address: Spanish (es)
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2a3f088bac9d14447ae7cfd3313df2ac
     m_Address: English (en)
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3720a714aa75d4445b2f6ca16cefd914
-    m_Address: Russian (ru)
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8e9300a5770c1044aa579c42343dea0d
-    m_Address: German (de)
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ec586ff524626114598d3f3de3de0c48
-    m_Address: Chinese (Simplified) (zh-Hans)
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f4d2775c10440b64bb5b2e3751aa814d
-    m_Address: Turkish (tr)
+  - m_GUID: 443573c960dbae5449b260eb3fa7127d
+    m_Address: Turkish (Turkey) (tr-TR)
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale

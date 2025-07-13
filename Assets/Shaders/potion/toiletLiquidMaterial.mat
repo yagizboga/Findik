@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: toiletLiquidMaterial
+  m_Shader: {fileID: 4800000, guid: d8cd6c43eb09fb640924e010b67835bc, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AlphaTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _CustomTime: 13.037756
+    - _DebugSpoonPos: 1
+    - _DistortStrength: 0.01
+    - _EdgeGlow: 0
+    - _EdgeWidth: 0
+    - _EnableExternalAlpha: 0
+    - _FresnelIntensity: 2.99
+    - _FresnelPower: 6.5
+    - _ParticleCount: 100
+    - _ParticleGlow: 1
+    - _ParticleSize: 0.0922
+    - _ParticleSpeed: 5
+    - _Radius: 1
+    - _RippleIntensity: 0.02
+    - _SparkleDensity: 58
+    - _SparkleSize: 0.049
+    - _SparkleSpeed: 3.79
+    - _SpoonEffectRadius: 5
+    - _SpoonEffectStrength: 26.3
+    - _Time: 5.4939322
+    - _TimeVal: 32.105194
+    - _WaveFrequency: 44
+    - _WaveSpeed: 5
+    - _WaveStrength: 2.45
+    - _ZWrite: 0
+    m_Colors:
+    - _BaseColor: {r: 0.42410198, g: 0, b: 0.4245283, a: 1}
+    - _Color: {r: 0.9339623, g: 0, b: 0.86518586, a: 1}
+    - _DeepColor: {r: 0.05724919, g: 1, b: 0, a: 1}
+    - _EdgeColor: {r: 0.8, g: 0.9, b: 1.2, a: 1}
+    - _MainColor: {r: 0.49733847, g: 0, b: 0.5849056, a: 1}
+    - _ParticleColor: {r: 0.8, g: 0.9, b: 1.5, a: 1}
+    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RippleColor: {r: 0.5, g: 0.7, b: 1.2, a: 1}
+    - _SparkleColor: {r: 0, g: 0, b: 1, a: 1}
+    - _SpoonPos: {r: 0.5075536, g: 0.38416666, b: 0, a: 0}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
