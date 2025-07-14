@@ -1,6 +1,7 @@
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class draggablePotionItem : MonoBehaviour
 {
@@ -60,24 +61,43 @@ public class draggablePotionItem : MonoBehaviour
 
     void StartDrag()
     {
+        Debug.Log("dragging...");
         if (type == PotionItem.hanging)
         {
-            currentDragVisual = Instantiate(draggedItemPrefab, Camera.main.ScreenToWorldPoint(Input.mousePosition), Quaternion.identity);
-            currentDragVisual.GetComponent<SpriteRenderer>().sprite = draggedSprite;
-            currentDragVisual.GetComponent<SpriteRenderer>().sortingOrder = 5;
-            
+            currentDragVisual = Instantiate(draggedItemPrefab, new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x,Camera.main.ScreenToWorldPoint(Input.mousePosition).y,0f), Quaternion.identity);
+            if (currentDragVisual.GetComponent<SpriteRenderer>() != null && draggedSprite != null)
+            {
+                currentDragVisual.GetComponent<SpriteRenderer>().sprite = draggedSprite;
+                currentDragVisual.GetComponent<SpriteRenderer>().sortingOrder = 5;
+            }
+
+
         }
         else if (type == PotionItem.jar)
         {
-            currentDragVisual = Instantiate(draggedItemPrefab, Camera.main.ScreenToWorldPoint(Input.mousePosition), Quaternion.identity);
-            currentDragVisual.GetComponent<SpriteRenderer>().sprite = draggedSprite;
-            currentDragVisual.GetComponent<SpriteRenderer>().sortingOrder = 5;
+            currentDragVisual = Instantiate(draggedItemPrefab, new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x,Camera.main.ScreenToWorldPoint(Input.mousePosition).y,0f), Quaternion.identity);
+            if (currentDragVisual.GetComponent<SpriteRenderer>() != null && draggedSprite != null)
+            {
+                currentDragVisual.GetComponent<SpriteRenderer>().sprite = draggedSprite;
+                currentDragVisual.GetComponent<SpriteRenderer>().sortingOrder = 5;
+            }
+            else
+            {
+                Debug.Log("renderer is missing");
+            }
         }
         else if (type == PotionItem.potion)
         {
-            currentDragVisual = Instantiate(draggedItemPrefab, Camera.main.ScreenToWorldPoint(Input.mousePosition), Quaternion.identity);
-            currentDragVisual.GetComponent<SpriteRenderer>().sprite = draggedSprite;
-            currentDragVisual.GetComponent<SpriteRenderer>().sortingOrder = 5;
+            currentDragVisual = Instantiate(draggedItemPrefab, new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x,Camera.main.ScreenToWorldPoint(Input.mousePosition).y,0f), Quaternion.identity);
+            if (currentDragVisual.GetComponent<SpriteRenderer>() != null && draggedSprite != null)
+            {
+                currentDragVisual.GetComponent<SpriteRenderer>().sprite = draggedSprite;
+                currentDragVisual.GetComponent<SpriteRenderer>().sortingOrder = 5;
+            }
+            else
+            {
+                Debug.Log("renderer is missing");
+            }
         }   
     }
     void EndDrag()
@@ -85,6 +105,8 @@ public class draggablePotionItem : MonoBehaviour
         if (type == PotionItem.potion && currentDragVisual.GetComponent<draggedItemScript>().GetIsInArea())
         {
             animator.Play(animationName);
+            Destroy(currentDragVisual);
+            currentDragVisual = null;
         }
         else if (type == PotionItem.hanging && currentDragVisual.GetComponent<draggedItemScript>().GetIsInArea())
         {

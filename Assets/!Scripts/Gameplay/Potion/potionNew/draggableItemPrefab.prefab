@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 8029381281612463673}
   - component: {fileID: 5680110507894865098}
   - component: {fileID: 5481897138836803005}
-  - component: {fileID: 7677255411343547522}
-  - component: {fileID: 7415573399927152354}
+  - component: {fileID: 3976492658399700736}
+  - component: {fileID: 6502379066652604349}
   m_Layer: 0
   m_Name: draggableItemPrefab
   m_TagString: Untagged
@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fb74661140cc6147b3070facf97a9f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!212 &7677255411343547522
+--- !u!212 &3976492658399700736
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -148,7 +148,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &7415573399927152354
+--- !u!95 &6502379066652604349
 Animator:
   serializedVersion: 7
   m_ObjectHideFlags: 0
@@ -158,7 +158,7 @@ Animator:
   m_GameObject: {fileID: 6515948610838112640}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 57c19706e4d0a3c45b260e26d4c9d132, type: 2}
+  m_Controller: {fileID: 9100000, guid: f46effbb81e014a42ac5cf2254ba8fff, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
