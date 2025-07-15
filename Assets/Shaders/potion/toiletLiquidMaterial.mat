@@ -61,7 +61,7 @@ Material:
     - _SpoonEffectRadius: 5
     - _SpoonEffectStrength: 26.3
     - _Time: 5.4939322
-    - _TimeVal: 35.867477
+    - _TimeVal: 20.703323
     - _WaveFrequency: 44
     - _WaveSpeed: 5
     - _WaveStrength: 2.45
@@ -72,10 +72,10 @@ Material:
     - _DeepColor: {r: 0.05724919, g: 1, b: 0, a: 1}
     - _EdgeColor: {r: 0.8, g: 0.9, b: 1.2, a: 1}
     - _MainColor: {r: 0.49733847, g: 0, b: 0.5849056, a: 1}
-    - _ParticleColor: {r: 0.8, g: 0.9, b: 1.5, a: 1}
+    - _ParticleColor: {r: 1, g: 0.15516612, b: 0, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
-    - _RippleColor: {r: 0.5, g: 0.7, b: 1.2, a: 1}
+    - _RippleColor: {r: 0.6981132, g: 0.5056545, b: 0.49724102, a: 1}
     - _SparkleColor: {r: 0, g: 0, b: 1, a: 1}
-    - _SpoonPos: {r: 0.50755763, g: 0.38416666, b: 0, a: 0}
+    - _SpoonPos: {r: 0.4987564, g: 0.38842595, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

@@ -15,6 +15,7 @@ TagManager:
   - Ingredient Holder
   - Dialogue
   - pourarea
+  - potionmanager
   layers:
   - Default
   - TransparentFX

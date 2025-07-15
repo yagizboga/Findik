@@ -1,11 +1,10 @@
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class draggablePotionItem : MonoBehaviour
-{
-    enum PotionItem
+public enum PotionItem
     {
         potion,
         jar,
@@ -14,15 +13,27 @@ public class draggablePotionItem : MonoBehaviour
         siphon,
         spoon
 
-    }
-    [SerializeField ]PotionItem type;
+}
+public class draggablePotionItem : MonoBehaviour
+{
+    [SerializeField] PotionItem type;
     [SerializeField] Animator animator;
     [SerializeField] Sprite draggedSprite;
     [SerializeField] GameObject draggedItemPrefab;
     [SerializeField] string animationName;
+    [SerializeField] Animator legsAnimator;
     GameObject currentDragVisual;
+    PotionManager potionManager;
     bool isDragging = false;
 
+    public PotionItem GetPotionItemType()
+    {
+        return type;
+    }
+    void Awake()
+    {
+        potionManager = GameObject.FindGameObjectWithTag("potionmanager").GetComponent<PotionManager>();
+    }
     void OnMouseDown()
     {
         if (type == PotionItem.hanging)
@@ -40,6 +51,16 @@ public class draggablePotionItem : MonoBehaviour
             isDragging = true;
             StartDrag();
         }
+        else if (type == PotionItem.bellow)
+        {
+            animator.SetTrigger("HeatUp");
+            legsAnimator.SetTrigger("heatTrigger");
+            potionManager.ChangeHeadSpriteColor();
+        }
+        else if (type == PotionItem.siphon)
+        {
+
+        }
 
     }
     void OnMouseUp()
@@ -55,7 +76,7 @@ public class draggablePotionItem : MonoBehaviour
     {
         if (isDragging && currentDragVisual != null)
         {
-            currentDragVisual.transform.position = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x,Camera.main.ScreenToWorldPoint(Input.mousePosition).y,10f);
+            currentDragVisual.transform.position = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, 10f);
         }
     }
 
@@ -64,7 +85,7 @@ public class draggablePotionItem : MonoBehaviour
         Debug.Log("dragging...");
         if (type == PotionItem.hanging)
         {
-            currentDragVisual = Instantiate(draggedItemPrefab, new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x,Camera.main.ScreenToWorldPoint(Input.mousePosition).y,0f), Quaternion.identity);
+            currentDragVisual = Instantiate(draggedItemPrefab, new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, 0f), Quaternion.identity);
             if (currentDragVisual.GetComponent<SpriteRenderer>() != null && draggedSprite != null)
             {
                 currentDragVisual.GetComponent<SpriteRenderer>().sprite = draggedSprite;
@@ -75,7 +96,7 @@ public class draggablePotionItem : MonoBehaviour
         }
         else if (type == PotionItem.jar)
         {
-            currentDragVisual = Instantiate(draggedItemPrefab, new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x,Camera.main.ScreenToWorldPoint(Input.mousePosition).y,0f), Quaternion.identity);
+            currentDragVisual = Instantiate(draggedItemPrefab, new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, 0f), Quaternion.identity);
             if (currentDragVisual.GetComponent<SpriteRenderer>() != null && draggedSprite != null)
             {
                 currentDragVisual.GetComponent<SpriteRenderer>().sprite = draggedSprite;
@@ -88,7 +109,7 @@ public class draggablePotionItem : MonoBehaviour
         }
         else if (type == PotionItem.potion)
         {
-            currentDragVisual = Instantiate(draggedItemPrefab, new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x,Camera.main.ScreenToWorldPoint(Input.mousePosition).y,0f), Quaternion.identity);
+            currentDragVisual = Instantiate(draggedItemPrefab, new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, 0f), Quaternion.identity);
             if (currentDragVisual.GetComponent<SpriteRenderer>() != null && draggedSprite != null)
             {
                 currentDragVisual.GetComponent<SpriteRenderer>().sprite = draggedSprite;
@@ -98,7 +119,7 @@ public class draggablePotionItem : MonoBehaviour
             {
                 Debug.Log("renderer is missing");
             }
-        }   
+        }
     }
     void EndDrag()
     {
@@ -107,19 +128,29 @@ public class draggablePotionItem : MonoBehaviour
             animator.Play(animationName);
             Destroy(currentDragVisual);
             currentDragVisual = null;
+            potionManager.ChangeHeadSprite();
         }
         else if (type == PotionItem.hanging && currentDragVisual.GetComponent<draggedItemScript>().GetIsInArea())
         {
             currentDragVisual.GetComponent<Animator>().Play(animationName);
+            currentDragVisual = null;
+            potionManager.ChangeHeadSprite();
         }
-        if (currentDragVisual != null)
+        else if (type == PotionItem.jar && currentDragVisual.GetComponent<draggedItemScript>().GetIsInArea())
         {
-            //Destroy(currentDragVisual);
-            //currentDragVisual = null;
+            currentDragVisual.GetComponent<Animator>().Play(animationName);
+            currentDragVisual = null;
+            potionManager.ChangeHeadSprite();
         }
-        
-    }
-    
+        if (!currentDragVisual.GetComponent<draggedItemScript>().GetIsInArea())
+        {
+            Destroy(currentDragVisual);
+            currentDragVisual = null;
+        }
 
-    
+    }
+
+
+
+
 }
