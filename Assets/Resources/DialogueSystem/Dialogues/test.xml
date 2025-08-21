@@ -1,0 +1,12 @@
+<Dialogues>
+    <dialogue id="1">
+        <lan_tr>merhaba</lan_tr>
+        <lan_en>hi</lan_en>
+        <next_dialogue>2</next_dialogue>
+    </dialogue>
+    <dialogue id="2">
+        <lan_tr>nasılsın</lan_tr>
+        <lan_en>how are you</lan_en>
+        <next_dialogue>2</next_dialogue>
+    </dialogue>
+</Dialogues>

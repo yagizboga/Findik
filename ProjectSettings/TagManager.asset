@@ -16,6 +16,7 @@ TagManager:
   - Dialogue
   - pourarea
   - potionmanager
+  - EventManager
   layers:
   - Default
   - TransparentFX
@@ -29,8 +30,8 @@ TagManager:
   - 
   - 
   - Ingredient
-  - 
-  - 
+  - InventoryGrid
+  - InventoryItems
   - 
   - 
   - 

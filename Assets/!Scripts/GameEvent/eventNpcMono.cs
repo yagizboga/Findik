@@ -16,9 +16,8 @@ public class eventNpcMono : MonoBehaviour
     TextMeshPro DialogueText;
     Transform dialoguepos;
 
-    public void Init(string DialogueId, string animation, Sprite dialoguesprite, Sprite mouthsprite, Sprite eyessprite, Vector3 targetPosition, Transform dialoguepos)
+    public void Init(string animation, Sprite dialoguesprite, Sprite mouthsprite, Sprite eyessprite, Vector3 targetPosition, Transform dialoguepos)
     {
-        this.DialogueId = DialogueId;
         anim = animation;
         this.targetPosition = targetPosition;
         fullspriteobject.GetComponent<SpriteRenderer>().sprite = dialoguesprite;
@@ -54,7 +53,10 @@ public class eventNpcMono : MonoBehaviour
             npcObject.GetComponent<Animator>().speed = 0;
             fullspriteobject.transform.position = dialoguepos.transform.position;
             fullspriteobject.GetComponent<SpriteRenderer>().sortingOrder = 1;
-            mouth.GetComponent<SpriteRenderer>().sortingOrder = 2;
+            fullspriteobject.GetComponent<Animator>().Play("npcEnterance");
+            mouth.GetComponent<Animator>().Play("npcEnterance");
+            eyes.GetComponent<Animator>().Play("npcEnterance");
+;           mouth.GetComponent<SpriteRenderer>().sortingOrder = 2;
             eyes.GetComponent<SpriteRenderer>().sortingOrder = 2;
         }
         if ((targetPosition - npcObject.transform.position).magnitude < 0.2f)
